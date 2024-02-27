@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="design/driver.css" rel="stylesheet">
+    <title>Driver</title>
+</head>
+<body>
+<div class="mainClass">
+    <div class="info">
+        <div class="textblock1">
+            <h2 id="name">Name</h2>
+            <h2 id="age">Age</h2>
+            <h2 id="height">height</h2>
+        </div>
+    </div>
+    <div class="portrait">
+        <img src="img/placeholder.jpg" id="portrait">
+    </div>
+    <script>
+        // Example JavaScript code to fetch image BLOB data from PHP file without jQuery
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'portrait.php', true);
+
+        xhr.responseType = 'arraybuffer';
+
+        xhr.onload = function() {
+            if (xhr.status >= 200 && xhr.status < 300) {
+                // Request was successful
+                var blob = new Blob([xhr.response], { type: 'image/jpeg' });  // Adjust the type based on your image format
+                var urlCreator = window.URL || window.webkitURL;
+                // Set the image source dynamically
+                document.getElementById("portrait").src = urlCreator.createObjectURL(blob);
+            } else {
+                console.error('Failed to fetch image BLOB data from PHP file.');
+            }
+        };
+
+        xhr.onerror = function() {
+            console.error('Failed to make the request to get_image_blob.php.');
+        };
+
+        xhr.send();
+    </script>
+</div>
