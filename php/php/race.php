@@ -13,7 +13,6 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Assuming you have a table named 'circuits' with columns 'name', 'location', 'country'
 $sql = "SELECT name, location, country FROM circuits LIMIT 1";
 $result = $conn->query($sql);
 
