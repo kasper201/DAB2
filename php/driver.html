@@ -8,9 +8,17 @@
 <div class="mainClass">
     <div class="info">
         <div class="textblock1">
-            <h2 id="name">Name</h2>
-            <h2 id="age">Age</h2>
-            <h2 id="height">height</h2>
+            <h1>General information</h1>
+            <h2 id="name">Loading...</h2>
+            <h2 id="age"></h2>
+            <h2 id="height"></h2>
+        </div>
+        <div class="devider"></div>
+        <div class="textblock2">
+            <h1>Racing information</h1>
+            <h2 id="podium places">Loading...</h2>
+            <h2 id="totalpoints"></h2>
+            <h2 id="maxpoints"></h2>
         </div>
     </div>
     <div class="portrait">
@@ -35,8 +43,21 @@
             }
         };
 
-        xhr.onerror = function() {
-            console.error('Failed to make the request to get_image_blob.php.');
+        // Now fetch information data
+        var xhrInfo = new XMLHttpRequest();
+        xhrInfo.open('GET', 'info.php', true);
+
+        xhrInfo.onload = function() {
+            if (xhrInfo.status >= 200 && xhrInfo.status < 300) {
+                // Request for information was successful
+                var data = JSON.parse(xhrInfo.responseText);
+                // Update information dynamically
+                document.getElementById("name").innerText = data.name;
+                document.getElementById("age").innerText = data.age;
+                document.getElementById("height").innerText = data.height;
+            } else {
+                console.error('Failed to fetch information data from PHP file.');
+            }
         };
 
         xhr.send();

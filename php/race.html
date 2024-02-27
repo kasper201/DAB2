@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="design/race.css" rel="stylesheet">
+    <title>Race</title>
+</head>
+<body>
+<div class="race">
+    <div class="info">
+        <!-- Your additional content goes here -->
+    </div>
+    <div class="circuit">
+        <img src="img/placeholder.jpg" id="circuit">
+        <div class="circuitInfo">
+            <h2 id="circuitName">Loading...</h2>
+            <h2 id="circuitLocation"></h2>
+            <h2 id="circuitCountry"></h2>
+        </div>
+    </div>
+</div>
+
+<script>
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'race.php', true);
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                var data = JSON.parse(xhr.responseText);
+
+                // Update the content dynamically
+                document.getElementById('circuitName').innerText = data.name;
+                document.getElementById('circuitLocation').innerText = data.location;
+                document.getElementById('circuitCountry').innerText = data.country;
+            } else {
+                console.error('Failed to fetch circuit information.');
+            }
+        }
+    };
+
+    xhr.send();
+</script>
+</body>
+</html>
