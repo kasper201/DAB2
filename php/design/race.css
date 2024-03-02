@@ -20,14 +20,27 @@ body {
     z-index: 1;
 }
 
-.textblock1{
+.textblock1,
+.textblock2{
     position: relative;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 50%;
+    width: 100%;
+    left: 3%;
     text-align: left;
     color: #ffffff;
+    display: inline-block;
+}
+
+.textblock1 h1,
+.textblock2 h1 {
+    color: #C00000; /* Change to the desired color for General information */
+}
+
+.devider{
+    width: 2px;
+    height: 98%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    background-color: #666666;
 }
 
 .circuit
