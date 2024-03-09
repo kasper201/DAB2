@@ -25,6 +25,7 @@ body {
 .textblock2{
     position: relative;
     width: 100%;
+    left: 3%;
     text-align: left;
     color: #ffffff;
     display: inline-block;
