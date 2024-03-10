@@ -1,3 +1,0 @@
-/home/flits/CLionProjects/DAB2/Importing/cmake-build-debug/CMakeFiles/Week2Deel2.dir
-/home/flits/CLionProjects/DAB2/Importing/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/flits/CLionProjects/DAB2/Importing/cmake-build-debug/CMakeFiles/rebuild_cache.dir
