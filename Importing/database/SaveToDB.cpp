@@ -79,6 +79,11 @@ int SaveToDB::saveToFile(std::vector<std::string> givenNames, std::vector<std::s
     for(int i = 0; i < teams.size(); i++)
         fileSave << "INSERT INGORE INTO team (id, naam) VALUES (" << i << ", " << teams[driverIds[i]][0] << ");" << std::endl;
 
+    std::cout << "Saving circuit info" << std::endl;
+//    // fill sql statements for the table circuit
+//    for(int i = 0; i < circuit.size(); i++)
+//        fileSave << "INSERT INGORE INTO circuit (id, naam, land_id, lengte, datum) VALUES (" << i << ", " << circuit[i] << ", " << country[i] << ", " << circuitLength[i] << ", " << date[i] << ");" << std::endl;
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     std::cout << "Starting on intermediair tables" << std::endl;
 
