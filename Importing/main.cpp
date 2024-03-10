@@ -3,9 +3,11 @@
 #include "Circuit/CircuitInfo.h"
 #include "results/Results.h"
 #include "database/SaveToDB.h"
+#include "countries/GetCountries.h"
 
 #include <fstream>
 #include <sstream>
+#include <iostream>
 
 int getAmountOfRaces(int year) {
     std::string url = "https://ergast.com/api/f1/" + std::to_string(year) + ".json";
@@ -41,6 +43,9 @@ int main() {
     CircuitInfo circuitInfo;
     Results results;
     SaveToDB saveToDB;
+    GetCountries countries;
+
+    std::cout << countries.countryConverter("Netherlands") << std::endl;
     std::vector<std::string>    givenNames, familyNames, nationalities,
                                 permanentNumbers, fullNames, driverIds,
                                 circuit, country, circuitLength, date;

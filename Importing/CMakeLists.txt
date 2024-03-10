@@ -17,7 +17,9 @@ add_executable(Week2Deel2 main.cpp
         CorrectJson.cpp
         CorrectJson.h
         database/SaveToDB.cpp
-        database/SaveToDB.h)
+        database/SaveToDB.h
+        countries/GetCountries.cpp
+        countries/GetCountries.h)
 
 find_package(CURL REQUIRED)
 

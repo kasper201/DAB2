@@ -72,7 +72,7 @@ int SaveToDB::saveToFile(std::vector<std::string> givenNames, std::vector<std::s
     std::cout << "Saving land info" << std::endl;
     // fill sql statements for the table land
     for(int i = 0; i < nationalities.size(); i++)
-        fileSave << "INSERT INGORE INTO land (id, naam) VALUES (" << i << ", " << nationalities[i] << ");" << std::endl;
+        fileSave << "INSERT INGORE INTO land (id, naam) VALUES (" << i << ", " << countries[i] << ");" << std::endl;
 
     std::cout << "Saving team info" << std::endl;
     // fill sql statements for the table team
@@ -80,17 +80,17 @@ int SaveToDB::saveToFile(std::vector<std::string> givenNames, std::vector<std::s
         fileSave << "INSERT INGORE INTO team (id, naam) VALUES (" << i << ", " << teams[driverIds[i]][0] << ");" << std::endl;
 
     std::cout << "Saving circuit info" << std::endl;
-//    // fill sql statements for the table circuit
-//    for(int i = 0; i < circuit.size(); i++)
-//        fileSave << "INSERT INGORE INTO circuit (id, naam, land_id, lengte, datum) VALUES (" << i << ", " << circuit[i] << ", " << country[i] << ", " << circuitLength[i] << ", " << date[i] << ");" << std::endl;
+    // fill sql statements for the table circuit
+    for(int i = 0; i < circuit.size(); i++)
+        fileSave << "INSERT INGORE INTO circuit (id, naam, land_id, lengte, datum) VALUES (" << i << ", " << circuit[i] << ", " << country[i] << ", " << circuitLength[i] << ", " << path << circuit[i] << ".png" << ");" << std::endl;
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     std::cout << "Starting on intermediair tables" << std::endl;
 
     std::cout << "Saving landcoureur info" << std::endl;
     // fill sql statements for landcoureur table
-    for(int i = 0; i < nationalities.size(); i++)
-        fileSave << "INSERT INGORE INTO landcoureur (id, land_id, coureur_id) VALUES (" << i << ", "<< nationalities[i] << ", " << permanentNumbers[i] << ");" << std::endl;
+//    for(int i = 0; i < nationalities.size(); i++)
+//        fileSave << "INSERT INGORE INTO landcoureur (id, land_id, coureur_id) VALUES (" << i << ", "<< i << ", " << permanentNumbers[i] << ");" << std::endl;
 
     std::cout << "Saving teamcoureur info" << std::endl;
     // fill sql statements for teamcoureur table
