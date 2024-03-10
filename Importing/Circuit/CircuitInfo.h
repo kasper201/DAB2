@@ -8,12 +8,13 @@
 #include "htmlRequest.h"
 
 #include <string>
+#include <vector>
 
 class CircuitInfo {
 public:
     CircuitInfo();
     ~CircuitInfo();
-    int circuit(int year);
+    int circuit(int year, std::vector<std::string> &circuit, std::vector<std::string> &country, std::vector<std::string> &circuitLength, std::vector<std::string> &date);
     std::string findInHtml(std::string html);
     std::string findCircuitLength(int circuitNr, int year);
     int circuitImage(std::string circuitC); // corrected circuit

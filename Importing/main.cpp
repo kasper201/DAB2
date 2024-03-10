@@ -41,18 +41,20 @@ int main() {
     CircuitInfo circuitInfo;
     Results results;
     SaveToDB saveToDB;
-    std::vector<std::string> givenNames, familyNames, nationalities, permanentNumbers, fullNames, driverIds;
+    std::vector<std::string>    givenNames, familyNames, nationalities,
+                                permanentNumbers, fullNames, driverIds,
+                                circuit, country, circuitLength, date;
     std::map<std::string, std::vector<std::string>> teams;
     int year = 2023;
     for(int i = 0; i + year < 2024; i++){
         driverinfo.driver(year + i, givenNames, familyNames, nationalities, permanentNumbers, fullNames, driverIds, teams);
-        circuitInfo.circuit(year + i);
+        circuitInfo.circuit(year + i, circuit, country, circuitLength, date);
         for(int i = 0; i < getAmountOfRaces(year + i); i++) {
             results.results(year + i, i);
         }
     }
 
-    saveToDB.saveToFile(givenNames, familyNames, nationalities, permanentNumbers, fullNames, driverIds, teams);
+    saveToDB.saveToFile(givenNames, familyNames, nationalities, permanentNumbers, fullNames, driverIds, teams, circuit, country, circuitLength, date);
 
     return 0;
 }

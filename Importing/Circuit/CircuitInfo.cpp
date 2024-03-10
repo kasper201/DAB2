@@ -6,11 +6,9 @@
 #include "getImage.h"
 
 #include <iostream>
-#include <algorithm>
 #include <fstream>
 #include <sstream>
 #include <iomanip>
-#include <vector>
 
 
 CircuitInfo::CircuitInfo() {
@@ -21,7 +19,7 @@ CircuitInfo::~CircuitInfo() {
 
 }
 
-int CircuitInfo::circuit(int year) {
+int CircuitInfo::circuit(int year, std::vector<std::string> &circuit, std::vector<std::string> &country, std::vector<std::string> &circuitLength, std::vector<std::string> &date) {
     std::string url = "https://ergast.com/api/f1/2023/circuits.json";
     std::string response = request.getRequest(url);
     std::cout << "Response: " << response << std::endl;
@@ -45,7 +43,6 @@ int CircuitInfo::circuit(int year) {
 
     // Parse JSON
     std::istringstream stream(data);
-    std::vector<std::string> circuit, country, circuitLength;
     while(stream) { // iterate through the JSON data
         std::string token;
         stream >> token;

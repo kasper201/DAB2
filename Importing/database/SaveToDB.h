@@ -15,7 +15,8 @@ public:
     ~SaveToDB();
     int saveToFile(std::vector<std::string> givenNames,std::vector<std::string> familyNames,std::vector<std::string> nationalities,
                    std::vector<std::string> permanentNumbers,std::vector<std::string> fullNames,std::vector<std::string> driverIds,
-                   std::map<std::string, std::vector<std::string>> teams);
+                   std::map<std::string, std::vector<std::string>> teams, std::vector<std::string> circuit, std::vector<std::string> country,
+                   std::vector<std::string> circuitLength, std::vector<std::string> date);
 };
 
 

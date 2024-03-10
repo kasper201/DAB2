@@ -8,6 +8,10 @@
 #include <fstream>
 #include <unistd.h>
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 
 SaveToDB::SaveToDB() {
@@ -27,18 +31,29 @@ SaveToDB::~SaveToDB() {
  * @param fullNames
  * @param driverIds
  * @param teams
+ * @param circuit
+ * @param country
+ * @param circuitLength
+ * @param date
  * @return 0 by default, 1 if the sizes of the vectors of the driver are not the same
  */
 int SaveToDB::saveToFile(std::vector<std::string> givenNames, std::vector<std::string> familyNames, std::vector<std::string> nationalities,
                          std::vector<std::string> permanentNumbers, std::vector<std::string> fullNames, std::vector<std::string> driverIds,
-                         std::map<std::string, std::vector<std::string>> teams)
+                         std::map<std::string, std::vector<std::string>> teams, std::vector<std::string> circuit, std::vector<std::string> country,
+                         std::vector<std::string> circuitLength, std::vector<std::string> date)
 {
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // get full path of executing application
+    std::cout << "Getting path of executing application" << std::endl;
     char pBuf[256];
     size_t len = sizeof(pBuf);
+#ifndef _WIN32
     int bytes = MIN(readlink("/proc/self/exe", pBuf, len), len - 1);
     if(bytes >= 0)
         pBuf[bytes] = '\0';
+#else
+    GetModuleFileName(NULL, pBuf, len);
+#endif
     std::cout << "Path: " << pBuf << std::endl;
     std::string path = pBuf;
     path = path.substr(0, path.find("Week2Deel2"));
@@ -64,7 +79,7 @@ int SaveToDB::saveToFile(std::vector<std::string> givenNames, std::vector<std::s
     for(int i = 0; i < teams.size(); i++)
         fileSave << "INSERT INGORE INTO team (id, naam) VALUES (" << i << ", " << teams[driverIds[i]][0] << ");" << std::endl;
 
-
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     std::cout << "Starting on intermediair tables" << std::endl;
 
     std::cout << "Saving landcoureur info" << std::endl;
