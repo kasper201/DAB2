@@ -26,7 +26,8 @@ SaveToDB::~SaveToDB() {
  * @param permanentNumbers
  * @param fullNames
  * @param driverIds
- * @return 0 by default, 1 if the sizes of the vectors are not the same
+ * @param teams
+ * @return 0 by default, 1 if the sizes of the vectors of the driver are not the same
  */
 int SaveToDB::saveToFile(std::vector<std::string> givenNames, std::vector<std::string> familyNames, std::vector<std::string> nationalities,
                          std::vector<std::string> permanentNumbers, std::vector<std::string> fullNames, std::vector<std::string> driverIds,
@@ -49,7 +50,7 @@ int SaveToDB::saveToFile(std::vector<std::string> givenNames, std::vector<std::s
     }
     //std::cout << "size of givenNames: " << givenNames.size() << "familyNames: " << familyNames.size() << "nationalities: " << nationalities.size() << "permanentNumbers: " << permanentNumbers.size() << "fullNames: " << fullNames.size() << "driverIds: " << driverIds.size() << std::endl;
     std::cout << "Saving coureur info" << std::endl;
-    // fill sql statements for the table coureur while using the permanent numbers as the id
+    // fill sql statements for the table coureur while using the permanent numbers as the id this is only possible for any driver after 2015
     for(int i = 0; i < givenNames.size(); i++)
         fileSave << "INSERT INGORE INTO coureur (id, Naam, selfie) VALUES (" << permanentNumbers[i] << ", " << fullNames[i] << ", LOAD_FILE('" << path << familyNames[i] << ".png'));" << std::endl;
 
@@ -65,5 +66,19 @@ int SaveToDB::saveToFile(std::vector<std::string> givenNames, std::vector<std::s
 
 
     std::cout << "Starting on intermediair tables" << std::endl;
+
+    std::cout << "Saving landcoureur info" << std::endl;
+    // fill sql statements for landcoureur table
+    for(int i = 0; i < nationalities.size(); i++)
+        fileSave << "INSERT INGORE INTO landcoureur (id, land_id, coureur_id) VALUES (" << i << ", "<< nationalities[i] << ", " << permanentNumbers[i] << ");" << std::endl;
+
+    std::cout << "Saving teamcoureur info" << std::endl;
+    // fill sql statements for teamcoureur table
+    for(int i = 0; i < teams.size(); i++)
+        fileSave << "INSERT INGORE INTO teamcoureur (id, team_id, coureur_id) VALUES (" << i << ", "<< teams[driverIds[i]][0] << ", " << permanentNumbers[i] << ");" << std::endl;
+
+
+    fileSave.close();
+
     return 0;
 }
