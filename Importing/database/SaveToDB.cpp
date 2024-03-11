@@ -40,7 +40,8 @@ SaveToDB::~SaveToDB() {
 int SaveToDB::saveToFile(std::vector<std::string> givenNames, std::vector<std::string> familyNames, std::vector<std::string> nationalities,
                          std::vector<std::string> permanentNumbers, std::vector<std::string> fullNames, std::vector<std::string> driverIds,
                          std::map<std::string, std::vector<std::string>> teams, std::vector<std::string> circuit, std::vector<std::string> country,
-                         std::vector<std::string> circuitLength, std::vector<std::string> date)
+                         std::vector<std::string> circuitLength, std::vector<std::string> date,  std::vector<std::string> raceDate,
+                         std::vector<std::string> time, std::vector<std::string> position, std::vector<std::string> points)
 {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // get full path of executing application

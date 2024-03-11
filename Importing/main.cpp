@@ -48,14 +48,16 @@ int main() {
     std::cout << countries.countryConverter("Netherlands") << std::endl;
     std::vector<std::string>    givenNames, familyNames, nationalities,
                                 permanentNumbers, fullNames, driverIds,
-                                circuit, country, circuitLength, date;
+                                circuit, country, circuitLength, date,
+                                dateAll, time, driverAll, position, points,
+                                type;
     std::map<std::string, std::vector<std::string>> teams;
     int year = 2023;
     for(int i = 0; i + year < 2024; i++){
         driverinfo.driver(year + i, givenNames, familyNames, nationalities, permanentNumbers, fullNames, driverIds, teams);
-        circuitInfo.circuit(year + i, circuit, country, circuitLength, date);
+        circuitInfo.circuit(year + i, circuit, country, circuitLength);
         for(int i = 0; i < getAmountOfRaces(year + i); i++) {
-            results.results(year + i, i);
+            results.results(year + i, i, dateAll, time, driverAll, position, points);
         }
     }
 

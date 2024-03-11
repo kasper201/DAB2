@@ -18,7 +18,7 @@ Results::~Results() {
 
 }
 
-int Results::results(int year, int race) {
+int Results::results(int year, int race, std::vector<std::string> &dateAll, std::vector<std::string> &timeAll, std::vector<std::string> &driverAll, std::vector<std::string> &positionAll, std::vector<std::string> &pointsAll, std::vector<std::string> &type) {
     std::string url = "http://ergast.com/api/f1/" + std::to_string(year) + "/" + std::to_string(race) + "/results.json";
     std::string response = request.getRequest(url);
     std::cout << "Response: " << response << std::endl;
@@ -70,11 +70,20 @@ int Results::results(int year, int race) {
             stream >> std::quoted(pointsName);
             points.push_back(pointsName);
         }
+        type.push_back("Normal");
     }
 
     if(getSprintResults(year, race) == 1) {
         std::cout << "No sprint results found" << std::endl;
     }
+
+    // transfer data to main
+    dateAll = date;
+    timeAll = time;
+    driverAll = driver;
+    positionAll = position;
+    pointsAll = points;
+    type = this->type;
 
     return 0;
 }
@@ -137,5 +146,7 @@ int Results::getSprintResults(int year, int race) {
             points.push_back(pointsName);
         }
     }
+
+    type.push_back("Sprint");
     return 0;
 }

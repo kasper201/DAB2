@@ -13,13 +13,13 @@ class Results {
 public:
     Results();
     virtual ~Results();
-    int results(int year, int race);
+    int results(int year, int race, std::vector<std::string> &dateAll, std::vector<std::string> &timeAll, std::vector<std::string> &driverAll, std::vector<std::string> &positionAll, std::vector<std::string> &pointsAll, std::vector<std::string> &type);
 private:
     int getSprintResults(int year, int race);
 private:
     htmlRequest request;
     CorrectJson correctJson;
-    std::vector<std::string> date, time, driver, position, points;
+    std::vector<std::string> date, time, driver, position, points, type;
 };
 
 
