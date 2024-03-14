@@ -7,18 +7,59 @@
 </head>
 <body>
 <div class="race">
+    <button class="BackButton" onclick="window.location.href='main.html'">Back</button>
     <div class="info">
         <div class="textblock1">
             <h1>General information</h1>
-            <h2 id="name">Loading...</h2>
+            <table>
+                <tr>
+                    <td>First Place:</td>
+                    <td id="winner">Loading...</td>
+                </tr>
+                <tr>
+                    <td>Second Place:</td>
+                    <td id="second">Loading...</td>
+                </tr>
+                <tr>
+                    <td>Third Place:</td>
+                    <td id="third">Loading...</td>
+                </tr>
+                <tr>
+                    <td>date:</td>
+                    <td id="date">Loading...</td>
+                </tr>
+                <tr>
+                    <td>season:</td>
+                    <td id="season">Loading...</td>
+                </tr>
+                <tr>
+                    <td>Best Lap:</td>
+                    <td id="bestLap">Loading...</td>
+                </tr>
+                <tr>
+                    <td>Achieved in Round:</td>
+                    <td id="Achieved in">Loading...</td>
+                </tr>
+            </table>
         </div>
     </div>
     <div class="circuit">
         <img src="img/placeholder.jpg" id="circuit">
         <div class="circuitInfo">
-            <h2 id="circuitName">Loading...</h2>
-            <h2 id="circuitLocation"></h2>
-            <h2 id="circuitCountry"></h2>
+            <table>
+                <tr>
+                    <td>circuit name:</td>
+                    <td id="circuitName">Loading...</td>
+                </tr>
+                <tr>
+                    <td>location:</td>
+                    <td id="circuitLocation">Loading...</td>
+                </tr>
+                <tr>
+                    <td>country:</td>
+                    <td id="circuitCountry">Loading...</td>
+                </tr>
+            </table>
         </div>
     </div>
 </div>
