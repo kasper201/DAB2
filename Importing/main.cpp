@@ -50,18 +50,18 @@ int main() {
                                 permanentNumbers, fullNames, driverIds,
                                 circuit, country, circuitLength, date,
                                 dateAll, time, driverAll, position, points,
-                                type;
+                                type, location;
     std::map<std::string, std::vector<std::string>> teams;
     int year = 2023;
     for(int i = 0; i + year < 2024; i++){
         driverinfo.driver(year + i, givenNames, familyNames, nationalities, permanentNumbers, fullNames, driverIds, teams);
         circuitInfo.circuit(year + i, circuit, country, circuitLength);
         for(int i = 0; i < getAmountOfRaces(year + i); i++) {
-            results.results(year + i, i, dateAll, time, driverAll, position, points);
+            results.results(year + i, i, dateAll, time, driverAll, position, points, type, location);
         }
     }
 
-    saveToDB.saveToFile(givenNames, familyNames, nationalities, permanentNumbers, fullNames, driverIds, teams, circuit, country, circuitLength, date);
+    saveToDB.saveToFile(givenNames, familyNames, nationalities, permanentNumbers, fullNames, driverIds, teams, circuit, country, circuitLength, date, dateAll, time, position, points);
 
     return 0;
 }

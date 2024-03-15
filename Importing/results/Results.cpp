@@ -18,7 +18,8 @@ Results::~Results() {
 
 }
 
-int Results::results(int year, int race, std::vector<std::string> &dateAll, std::vector<std::string> &timeAll, std::vector<std::string> &driverAll, std::vector<std::string> &positionAll, std::vector<std::string> &pointsAll, std::vector<std::string> &type) {
+int Results::results(int year, int race, std::vector<std::string> &dateAll, std::vector<std::string> &timeAll, std::vector<std::string> &driverAll,
+                     std::vector<std::string> &positionAll, std::vector<std::string> &pointsAll, std::vector<std::string> &type, std::vector<std::string> &location) {
     std::string url = "http://ergast.com/api/f1/" + std::to_string(year) + "/" + std::to_string(race) + "/results.json";
     std::string response = request.getRequest(url);
     std::cout << "Response: " << response << std::endl;
@@ -69,6 +70,10 @@ int Results::results(int year, int race, std::vector<std::string> &dateAll, std:
             std::string pointsName;
             stream >> std::quoted(pointsName);
             points.push_back(pointsName);
+        } else if(token == "\"country\":") {
+            std::string countryName;
+            stream >> std::quoted(countryName);
+            this->location.push_back(countryName);
         }
         type.push_back("Normal");
     }
@@ -84,6 +89,7 @@ int Results::results(int year, int race, std::vector<std::string> &dateAll, std:
     positionAll = position;
     pointsAll = points;
     type = this->type;
+    location = this->location;
 
     return 0;
 }
@@ -144,6 +150,10 @@ int Results::getSprintResults(int year, int race) {
             std::string pointsName;
             stream >> std::quoted(pointsName);
             points.push_back(pointsName);
+        } else if(token == "\"country\":") {
+            std::string countryName;
+            stream >> std::quoted(countryName);
+            this->location.push_back(countryName);
         }
     }
 

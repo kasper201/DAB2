@@ -11,7 +11,8 @@ class GetCountries {
 public:
     GetCountries();
     virtual ~GetCountries();
-    std::string countryConverter(std::string country);
+    static int countryConverter(const std::string &country);
+    static void saveAllCountries(std::ofstream &file);
 };
 
 

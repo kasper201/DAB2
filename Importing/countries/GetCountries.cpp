@@ -11,6 +11,29 @@
 #include <sstream>
 #include <iomanip>
 #include <vector>
+#include <algorithm>
+
+struct Record {
+    std::string country;
+    std::string adjectival;
+};
+
+std::vector<Record> readCSV(const std::string& filename) {
+    std::ifstream file(filename);
+    std::vector<Record> data;
+    std::string line;
+
+    while (std::getline(file, line)) {
+        std::istringstream iss(line);
+        std::string country, adjectival;
+        std::getline(iss, country, ',');
+        std::getline(iss, adjectival, ',');
+
+        data.push_back({country, adjectival});
+    }
+
+    return data;
+}
 
 GetCountries::GetCountries() {
 
@@ -20,86 +43,51 @@ GetCountries::~GetCountries() {
 
 }
 
-std::string GetCountries::countryConverter(std::string country) {
-    CorrectJson correctJson;
-    htmlRequest request;
-    // Make a request to get country data from Rest Countries API
-    std::string apiUrl = "https://restcountries.com/v3.1/all";
-    std::string json = request.getRequest(apiUrl);
+int binarySearch(const std::vector<Record>& data, const std::string& key) {
+    int low = 0;
+    int high = data.size() - 1;
 
-    // Correct JSON for readability
-    std::string correctedJson = correctJson.correctJson(json);
-
-    std::ofstream fileSave("tempCircuit.json", std::ios::trunc);
-    fileSave << correctedJson;
-    fileSave.close();
-
-    // Read JSON data from file
-    std::ifstream file("tempCircuit.json");
-    if (!file.is_open()) {
-        std::cerr << "Error opening file" << std::endl;
-    }
-
-    std::stringstream buffer;
-    buffer << file.rdbuf();
-    std::string data = buffer.str();
-
-    // Parse JSON
-    std::istringstream stream(data);
-
-    std::string currentToken;
-    std::string countryName;
-    std::string femaleDemonyms;
-    std::vector<std::string> countries;
-
-    while (stream >> currentToken) {
-        if (currentToken == "\"name\":") {
-            stream >> currentToken; // move to the next token
-            if (currentToken == "{") {
-                // inside the "name" object
-                while (stream >> currentToken) {
-                    if (currentToken == "\"common\":") {
-                        stream >> std::quoted(countryName);
-                        countries.push_back(countryName);
-                    } else if (currentToken == "\"demonyms\":") {
-                        stream >> currentToken; // move to the next token
-                        stream >> currentToken; // assume it's the start of demonyms object
-                        if (currentToken == "{") {
-                            // inside the "demonyms" object
-                            while (stream >> currentToken) {
-                                if (currentToken == "\"eng\":") {
-                                    stream >> currentToken; // move to the next token
-                                    stream >> currentToken; // assume it's the start of the "eng" object
-                                    if (currentToken == "{") {
-                                        // inside the "eng" object
-                                        while (stream >> currentToken) {
-                                            if (currentToken == "\"f\":") {
-                                                stream >> currentToken; // move to the next token
-                                                stream >> std::quoted(femaleDemonyms);
-                                                for(const auto & countrie : countries) {
-                                                    if(countrie == country) {
-                                                        return femaleDemonyms;
-                                                    }
-                                                }
-                                                break; // break from the "eng" object loop
-                                            } else if (currentToken == "}") {
-                                                // end of the "eng" object
-                                                break;
-                                            }
-                                        }
-                                    }
-                                } else if (currentToken == "}") {
-                                    // end of the "demonyms" object
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+    while (low <= high) {
+        int mid = (low + high) / 2;
+        if (data[mid].country == key) {
+            return mid; // Return the index if found
+        } else if (data[mid].country < key) {
+            low = mid + 1;
+        } else {
+            high = mid - 1;
         }
     }
 
-    std::cout << "Demonym not available for " << country << "." << std::endl;
-    return "N/A";
+    while (low <= high) {
+        int mid = (low + high) / 2;
+        if (data[mid].adjectival == key) {
+            return mid; // Return the index if found
+        } else if (data[mid].adjectival < key) {
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+
+    return -1; // Return -1 if not found
+}
+
+int GetCountries::countryConverter(const std::string &country) {
+    std::vector<Record> data = readCSV("listcountries.csv");
+
+    return binarySearch(data, country);
+}
+
+/**
+ * @brief Save all countries to a file
+ */
+void GetCountries::saveAllCountries(std::ofstream &file) {
+
+    std::vector<Record> data = readCSV("listcountries.csv");
+
+    for(int i = 0; i < data.size(); i++) {
+        file << "INSERT INTO land (id, naam, adjectival) VALUES (" << i << ", " << std::quoted(data[i].country) << ", " << std::quoted(data[i].adjectival) << ");" << std::endl;
+        std::cout << "country: " << data[i].country << " adjectival: " << data[i].adjectival << std::endl;
+    }
+
 }

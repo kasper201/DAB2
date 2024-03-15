@@ -3,6 +3,7 @@
 //
 
 #include "SaveToDB.h"
+#include "../countries/GetCountries.h"
 
 #include <iostream>
 #include <fstream>
@@ -59,7 +60,15 @@ int SaveToDB::saveToFile(std::vector<std::string> givenNames, std::vector<std::s
     std::string path = pBuf;
     path = path.substr(0, path.find("Week2Deel2"));
 
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // save to database
+    GetCountries getCountries;
     std::ofstream fileSave("saveToDB.sql", std::ios::trunc);
+
+    std::cout << "Saving all countries to database" << std::endl;
+    getCountries.saveAllCountries(fileSave);
+
     if(givenNames.size() != familyNames.size() || givenNames.size() != nationalities.size() || givenNames.size() != permanentNumbers.size() || givenNames.size() != fullNames.size() || givenNames.size() != driverIds.size()) {
         std::cerr << "Error: the sizes of the vectors are not the same" << std::endl;
         return 1;
@@ -70,11 +79,6 @@ int SaveToDB::saveToFile(std::vector<std::string> givenNames, std::vector<std::s
     for(int i = 0; i < givenNames.size(); i++)
         fileSave << "INSERT INGORE INTO coureur (id, Naam, selfie) VALUES (" << permanentNumbers[i] << ", " << fullNames[i] << ", LOAD_FILE('" << path << familyNames[i] << ".png'));" << std::endl;
 
-    std::cout << "Saving land info" << std::endl;
-    // fill sql statements for the table land
-    for(int i = 0; i < nationalities.size(); i++)
-        fileSave << "INSERT INGORE INTO land (id, naam) VALUES (" << i << ", " << countries[i] << ");" << std::endl;
-
     std::cout << "Saving team info" << std::endl;
     // fill sql statements for the table team
     for(int i = 0; i < teams.size(); i++)
@@ -83,15 +87,30 @@ int SaveToDB::saveToFile(std::vector<std::string> givenNames, std::vector<std::s
     std::cout << "Saving circuit info" << std::endl;
     // fill sql statements for the table circuit
     for(int i = 0; i < circuit.size(); i++)
-        fileSave << "INSERT INGORE INTO circuit (id, naam, land_id, lengte, datum) VALUES (" << i << ", " << circuit[i] << ", " << country[i] << ", " << circuitLength[i] << ", " << path << circuit[i] << ".png" << ");" << std::endl;
+        fileSave << "INSERT INGORE INTO circuit (id, naam, landID, lengte, datum) VALUES (" << i << ", " << circuit[i] << ", " << getCountries.countryConverter(country[i]) << ", " << circuitLength[i] << ", " << path << circuit[i] << ".png" << ");" << std::endl;
+
+    std::cout << "Saving result info" << std::endl;
+    // fill sql statements for the table result
+    for(int i = 0; i < position.size(); i++)
+        fileSave << "INSERT INTO result (id, score, pos) VALUES (" << i << ", " << points[i] << ", " << position[i] << ");" << std::endl;
+
+    std::cout << "Saving race info" << std::endl;
+    // fill sql statements for the table race
+    for(int i = 0; i < date.size(); i++)
+//        fileSave << "INSERT INTO race (id, circuitID, landID, resultID, type) VALUES (" << i << ", " << i << ", " << getCountries.countryConverter(country[i]) << ", " << i << ", " << date[i] << ");" << std::endl;
+
+    std::cout << "Saving kalender info" << std::endl;
+    // fill sql statements for the table kalender
+    for(int i = 0; i < raceDate.size(); i++)
+        fileSave << "INSERT INTO kalender (id, raceID, datum) VALUES (" << i << ", " << i << ", " << raceDate[i] << ");" << std::endl;
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     std::cout << "Starting on intermediair tables" << std::endl;
 
     std::cout << "Saving landcoureur info" << std::endl;
     // fill sql statements for landcoureur table
-//    for(int i = 0; i < nationalities.size(); i++)
-//        fileSave << "INSERT INGORE INTO landcoureur (id, land_id, coureur_id) VALUES (" << i << ", "<< i << ", " << permanentNumbers[i] << ");" << std::endl;
+    for(int i = 0; i < nationalities.size(); i++)
+        fileSave << "INSERT INGORE INTO landcoureur (id, land_id, coureur_id) VALUES (" << i << ", "<< getCountries.countryConverter(nationalities[i]) << ", " << permanentNumbers[i] << ");" << std::endl;
 
     std::cout << "Saving teamcoureur info" << std::endl;
     // fill sql statements for teamcoureur table
