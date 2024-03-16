@@ -58,7 +58,7 @@ int Results::results(int year, int race, std::vector<std::string> &dateAll, std:
             if(!firstTime)
                 time.push_back(timeName);
             firstTime = false;
-        } else if(token == "\"driver\":") {
+        } else if(token == "\"permanentNumber\":") {
             std::string driverName;
             stream >> std::quoted(driverName);
             driver.push_back(driverName);
@@ -75,8 +75,9 @@ int Results::results(int year, int race, std::vector<std::string> &dateAll, std:
             stream >> std::quoted(countryName);
             this->location.push_back(countryName);
         }
-        type.push_back("Normal");
     }
+
+    this->type.push_back("Normal");
 
     if(getSprintResults(year, race) == 1) {
         std::cout << "No sprint results found" << std::endl;

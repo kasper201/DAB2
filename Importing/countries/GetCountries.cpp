@@ -71,7 +71,7 @@ void GetCountries::saveAllCountries(std::ofstream &file) {
     std::vector<Record> data = readCSV("listcountries.csv");
 
     for(int i = 0; i < data.size(); i++) {
-        file << "INSERT INTO land (id, naam, adjectival) VALUES (" << i << ", " << std::quoted(data[i].country) << ", " << std::quoted(data[i].adjectival) << ");" << std::endl;
+        file << "INSERT INTO land (landID, naam, adjectival) VALUES (" << i << ", " << std::quoted(data[i].country) << ", " << std::quoted(data[i].adjectival) << ");" << std::endl;
         std::cout << "country: " << data[i].country << " adjectival: " << data[i].adjectival << std::endl;
     }
 

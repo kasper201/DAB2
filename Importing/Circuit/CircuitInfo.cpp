@@ -22,7 +22,7 @@ CircuitInfo::~CircuitInfo() {
 int CircuitInfo::circuit(int year, std::vector<std::string> &circuit, std::vector<std::string> &country, std::vector<std::string> &circuitLength) {
     std::string url = "https://ergast.com/api/f1/2023/circuits.json";
     std::string response = request.getRequest(url);
-    std::cout << "Response: " << response << std::endl;
+//    std::cout << "Response: " << response << std::endl;
 
     // Correct JSON for readability
     std::string correctedJson = correctJson.correctJson(response);
