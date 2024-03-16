@@ -48,25 +48,10 @@ int binarySearch(const std::vector<Record>& data, const std::string& key) {
     int high = data.size() - 1;
 
     while (low <= high) {
-        int mid = (low + high) / 2;
-        if (data[mid].country == key) {
-            return mid; // Return the index if found
-        } else if (data[mid].country < key) {
-            low = mid + 1;
-        } else {
-            high = mid - 1;
+        if(data[low].country == key || data[low].adjectival == key) {
+            return low;
         }
-    }
-
-    while (low <= high) {
-        int mid = (low + high) / 2;
-        if (data[mid].adjectival == key) {
-            return mid; // Return the index if found
-        } else if (data[mid].adjectival < key) {
-            low = mid + 1;
-        } else {
-            high = mid - 1;
-        }
+        low++;
     }
 
     return -1; // Return -1 if not found

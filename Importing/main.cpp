@@ -8,6 +8,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <iomanip>
 
 int getAmountOfRaces(int year) {
     std::string url = "https://ergast.com/api/f1/" + std::to_string(year) + ".json";
@@ -30,8 +31,10 @@ int getAmountOfRaces(int year) {
     int amountOfRaces = 0;
     while(stream) {
         stream >> token;
-        if(token == "\"rounds\":") {
-            stream >> amountOfRaces;
+        if(token == "\"total\":") {
+            std::string amount;
+            stream >> std::quoted(amount);
+            amountOfRaces = std::stoi(amount);
             break;
         }
     }
@@ -48,7 +51,7 @@ int main() {
     std::cout << countries.countryConverter("Netherlands") << std::endl;
     std::vector<std::string>    givenNames, familyNames, nationalities,
                                 permanentNumbers, fullNames, driverIds,
-                                circuit, country, circuitLength, date,
+                                circuit, country, circuitLength,
                                 dateAll, time, driverAll, position, points,
                                 type, location;
     std::map<std::string, std::vector<std::string>> teams;
@@ -56,12 +59,12 @@ int main() {
     for(int i = 0; i + year < 2024; i++){
         driverinfo.driver(year + i, givenNames, familyNames, nationalities, permanentNumbers, fullNames, driverIds, teams);
         circuitInfo.circuit(year + i, circuit, country, circuitLength);
-        for(int i = 0; i < getAmountOfRaces(year + i); i++) {
-            results.results(year + i, i, dateAll, time, driverAll, position, points, type, location);
+        for(int i = 1; i < getAmountOfRaces(year + i - 1) + 1; i++) {
+            results.results(year, i, dateAll, time, driverAll, position, points, type, location);
         }
     }
 
-    saveToDB.saveToFile(givenNames, familyNames, nationalities, permanentNumbers, fullNames, driverIds, teams, circuit, country, circuitLength, date, dateAll, time, position, points);
+    saveToDB.saveToFile(givenNames, familyNames, nationalities, permanentNumbers, fullNames, driverIds, teams, circuit, country, circuitLength, dateAll, time, position, points, type);
 
     return 0;
 }
