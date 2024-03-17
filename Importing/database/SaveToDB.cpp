@@ -90,14 +90,14 @@ int SaveToDB::saveToFile(std::vector<std::string> givenNames, std::vector<std::s
                  << std::endl;
 
     std::cout << "Saving circuit info" << std::endl;
-    std::map<std::string, std::string> circuitMap;
+    std::map<std::string, int> circuitMap;
     // fill sql statements for the table circuit
     for (int i = 0; i < circuit.size(); i++)
     {
 //        std::cout << "Country: " << country[i] << std::endl;
 //        std::cout << "Location: " << getCountries.countryConverter(country[i]) << std::endl;
         if(circuitMap.find(circuitLAT[i]) == circuitMap.end()) {
-            circuitMap[circuitLAT[i]] = circuit[i];
+            circuitMap[circuitLAT[i]] = i;
             std::cout << "Circuit: " << circuit[i] << " CircuitLAT: " << circuitLAT[i] << std::endl;
             fileSave << "INSERT IGNORE INTO circuit (ID, circuitNaam, landID, lengte, foto) VALUES (" << i << ", '"
                      << circuit[i] << "', " << getCountries.countryConverter(country[i]) << ", " << circuitLength[i]
@@ -115,8 +115,8 @@ int SaveToDB::saveToFile(std::vector<std::string> givenNames, std::vector<std::s
             std::cerr << "Circuit not found" << std::endl;
         } else {
             std::cout << "LocationLAT: " << locationLAT[i] << std::endl;
-            fileSave << "INSERT INTO race (ID, circuitID, type) VALUES (" << i << ", '" << circuitMap[locationLAT[i]]
-                     << "', '"
+            fileSave << "INSERT INTO race (ID, circuitID, type) VALUES (" << i << ", " << circuitMap[locationLAT[i]]
+                     << ", '"
                      << type[i] << "');" << std::endl;
         }
     }
