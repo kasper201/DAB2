@@ -16,14 +16,6 @@
                     <td id="name">Loading...</td>
                 </tr>
                 <tr>
-                    <td>age:</td>
-                    <td id="age">Loading...</td>
-                </tr>
-                <tr>
-                    <td>height:</td>
-                    <td id="height">Loading...</td>
-                </tr>
-                <tr>
                     <td>Gender:</td>
                     <td id="Gender">Male</td>
                 </tr>
@@ -40,6 +32,7 @@
                     <td id="team">Loading...</td>
                 </tr>
             </table>
+            <img src="img/placeholder.jpg" id="flag1">
         </div>
         <div class="devider"></div>
         <div class="textblock2">
@@ -66,47 +59,13 @@
                     <td id="thirdPlaces">Loading...</td>
                 </tr>
             </table>
+            <img src="img/placeholder.jpg" id="flag2">
         </div>
     </div>
     <div class="portrait">
         <img src="img/placeholder.jpg" id="portrait">
     </div>
     <script>
-        // Example JavaScript code to fetch image BLOB data from PHP file without jQuery
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'portrait.php', true);
 
-        xhr.responseType = 'arraybuffer';
-
-        xhr.onload = function() {
-            if (xhr.status >= 200 && xhr.status < 300) {
-                // Request was successful
-                var blob = new Blob([xhr.response], { type: 'image/jpeg' });  // Adjust the type based on your image format
-                var urlCreator = window.URL || window.webkitURL;
-                // Set the image source dynamically
-                document.getElementById("portrait").src = urlCreator.createObjectURL(blob);
-            } else {
-                console.error('Failed to fetch image BLOB data from PHP file.');
-            }
-        };
-
-        // Now fetch information data
-        var xhrInfo = new XMLHttpRequest();
-        xhrInfo.open('GET', 'info.php', true);
-
-        xhrInfo.onload = function() {
-            if (xhrInfo.status >= 200 && xhrInfo.status < 300) {
-                // Request for information was successful
-                var data = JSON.parse(xhrInfo.responseText);
-                // Update information dynamically
-                document.getElementById("name").innerText = data.name;
-                document.getElementById("age").innerText = data.age;
-                document.getElementById("height").innerText = data.height;
-            } else {
-                console.error('Failed to fetch information data from PHP file.');
-            }
-        };
-
-        xhr.send();
     </script>
 </div>
