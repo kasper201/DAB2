@@ -11,7 +11,15 @@
 #include <iomanip>
 
 Results::Results() {
-
+    date.clear();
+    time.clear();
+    driver.clear();
+    position.clear();
+    points.clear();
+    type.clear();
+    location.clear();
+    fastestLapTime.clear();
+    fastestLapNr.clear();
 }
 
 Results::~Results() {
@@ -19,7 +27,8 @@ Results::~Results() {
 }
 
 int Results::results(int year, int race, std::vector<std::string> &dateAll, std::vector<std::string> &timeAll, std::vector<std::string> &driverAll,
-                     std::vector<std::string> &positionAll, std::vector<std::string> &pointsAll, std::vector<std::string> &type, std::vector<std::string> &location) {
+                     std::vector<std::string> &positionAll, std::vector<std::string> &pointsAll, std::vector<std::string> &type,
+                     std::vector<std::string> &location, std::vector<std::string> &fastestLapTimeAll, std::vector<std::string> &fastestLapNrAll) {
     std::string url = "http://ergast.com/api/f1/" + std::to_string(year) + "/" + std::to_string(race) + "/results.json";
     std::string response = request.getRequest(url);
     std::cout << "Response: " << response << std::endl;
@@ -43,7 +52,7 @@ int Results::results(int year, int race, std::vector<std::string> &dateAll, std:
 
     // Parse JSON
     std::istringstream stream(data);
-    bool firstTime = true;
+    bool firstTime = true; // the time at which the race takes place can now be recorded
     while(stream)
     {
         std::string token;
@@ -74,6 +83,28 @@ int Results::results(int year, int race, std::vector<std::string> &dateAll, std:
             std::string countryName;
             stream >> std::quoted(countryName);
             this->location.push_back(countryName);
+        } else if(token == "\"FastestLap\":") {
+            stream >> token;
+            stream >> token;
+            if(token == "\"rank\":") {
+                stream >> token;
+                stream >> token;
+                if (token == "\"lap\":") {
+                    stream >> token;
+                    std::string lap;
+                    stream >> std::quoted(lap);
+                    fastestLapNr.push_back(lap);
+                    stream >> token;
+                    stream >> token;
+                    stream >> token;
+                    if (token == "\"time\":") {
+                        std::string fastestLap;
+                        stream >> std::quoted(fastestLap);
+                        std::cout << "RaceNr: " << race << ", Fastest lap: " << fastestLap << std::endl;
+                        fastestLapTime.push_back(fastestLap);
+                    }
+                }
+            }
         }
     }
 
@@ -91,6 +122,8 @@ int Results::results(int year, int race, std::vector<std::string> &dateAll, std:
     pointsAll = points;
     type = this->type;
     location = this->location;
+    fastestLapTimeAll = fastestLapTime;
+    fastestLapNrAll = fastestLapNr;
 
     return 0;
 }
@@ -155,6 +188,28 @@ int Results::getSprintResults(int year, int race) {
             std::string countryName;
             stream >> std::quoted(countryName);
             this->location.push_back(countryName);
+        } else if(token == "\"FastestLap\":") {
+            stream >> token;
+            stream >> token;
+            if(token == "\"rank\":") {
+                stream >> token;
+                stream >> token;
+                if (token == "\"lap\":") {
+                    stream >> token;
+                    std::string lap;
+                    stream >> std::quoted(lap);
+                    fastestLapNr.push_back(lap);
+                    stream >> token;
+                    stream >> token;
+                    stream >> token;
+                    if (token == "\"time\":") {
+                        std::string fastestLap;
+                        stream >> std::quoted(fastestLap);
+                        std::cout << "RaceNr: " << race << ", Fastest lap: " << fastestLap << std::endl;
+                        fastestLapTime.push_back(fastestLap);
+                    }
+                }
+            }
         }
     }
 
