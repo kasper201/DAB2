@@ -171,7 +171,7 @@ int SaveToDB::saveToFile(std::vector<std::string> givenNames, std::vector<std::s
     std::cout << "Saving teamcoureur info" << std::endl;
     // fill sql statements for teamcoureur table
     for(int i = 0; i < teams.size(); i++)
-        fileSave << "INSERT IGNORE INTO teamCoureur (ID, teamID, coureurID) VALUES (" << i << ", "<< teamMap[teams[driverIds[i]][0]] << ", " << permanentNumbers[i] << ");" << std::endl;
+        fileSave << "INSERT IGNORE INTO teamCoureur (ID, teamID, coureurID) VALUES (" << i << ", " << teamMap[teams[driverIds[i]][0]] << ", " << permanentNumbers[i] << ");" << std::endl;
 
 //    for(int i = 0; i < driverAll.size(); i++) {
 ////        if(driverAll[i] == "999")

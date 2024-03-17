@@ -69,9 +69,16 @@ int GetCountries::countryConverter(const std::string &country) {
 void GetCountries::saveAllCountries(std::ofstream &file) {
 
     std::vector<Record> data = readCSV("listcountries.csv");
+    std::vector<Record> countryCodes = readCSV("CountryCodes.csv");
+    std::string code;
 
     for(int i = 0; i < data.size(); i++) {
-        file << "INSERT INTO land (landID, naam, adjectival) VALUES (" << i << ", " << std::quoted(data[i].country) << ", " << std::quoted(data[i].adjectival) << ");" << std::endl;
+        for( int j = 0; j < countryCodes.size(); j++) {
+            if(countryCodes[j].country == data[i].country) {
+                code = countryCodes[j].adjectival;
+            }
+        }
+        file << "INSERT INTO land (landID, naam, adjectival, flag) VALUES (" << i << ", " << std::quoted(data[i].country) << ", " << std::quoted(data[i].adjectival) << ", LOAD_FILE('" << "/home/flits/Downloads/flag-icons-main/flags/1x1/" << code << ".svg'));" << std::endl;
         std::cout << "country: " << data[i].country << " adjectival: " << data[i].adjectival << std::endl;
     }
 
