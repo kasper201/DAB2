@@ -113,11 +113,11 @@ int Results::results(int year, int race, std::vector<std::string> &dateAll, std:
     }
 
     while(fastestLapNr.size() < points.size()) {
-        fastestLapNr.push_back("999");
-        fastestLapTime.push_back("999");
+        fastestLapNr.push_back("NULL");
+        fastestLapTime.push_back("NULL");
     }
     while(driver.size() < points.size()) {
-        driver.push_back("999");
+        driver.push_back("NULL");
     }
     // transfer data to main
     dateAll = date;

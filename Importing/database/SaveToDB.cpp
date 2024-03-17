@@ -79,15 +79,33 @@ int SaveToDB::saveToFile(std::vector<std::string> givenNames, std::vector<std::s
     getCountries.saveAllCountries(fileSave);
 
     std::cout << "Saving coureur info" << std::endl;
+    std::vector<std::string> familyNamesTemp;
     // fill sql statements for the table coureur while using the permanent numbers as the id this is only possible for any driver after 2015
-    for (int i = 0; i < givenNames.size(); i++)
-        fileSave << "INSERT IGNORE INTO coureur (coureurID, naam, foto) VALUES (" << permanentNumbers[i] << ", '" << fullNames[i] << "', LOAD_FILE('" << path << familyNames[i] << ".png'));" << std::endl;
+    for (int i = 0; i < givenNames.size(); i++) {
+        for(int j = 0; j <= i; j++)
+            if(familyNames[i] == familyNames[j])
+                continue;
+        if(permanentNumbers[i] == "38")
+            break;
+        familyNamesTemp.push_back(familyNames[i]);
+        fileSave << "INSERT IGNORE INTO coureur (coureurID, naam, foto) VALUES (" << permanentNumbers[i] << ", '"
+                 << fullNames[i] << "', LOAD_FILE('" << path << familyNames[i] << ".png'));" << std::endl;
+    }
 
     std::cout << "Saving team info" << std::endl;
+    std::map<std::string, int> teamMap;
+    std::string teamsTemp[100];
     // fill sql statements for the table team
-    for (int i = 0; i < teams.size(); i++)
+    for (int i = 0; i < teams.size(); i++) {
+        for(int j = 0; j <= i; j++)
+            if(teamsTemp[j] == teams[driverIds[i]][0])
+                goto endForLoop; // eww goto
+        teamsTemp[i] = teams[driverIds[i]][0];
+        teamMap[teams[driverIds[i]][0]] = i;
         fileSave << "INSERT IGNORE INTO team (ID, naam) VALUES (" << i << ", '" << teams[driverIds[i]][0] << "');"
                  << std::endl;
+        endForLoop:
+    }
 
     std::cout << "Saving circuit info" << std::endl;
     std::map<std::string, int> circuitMap;
@@ -125,7 +143,7 @@ int SaveToDB::saveToFile(std::vector<std::string> givenNames, std::vector<std::s
     // fill sql statements for the table result
     for(int i = 0; i < driverAll.size(); i++) // might be issues with saving etc
     {
-        if(fastestLapNrAll[i] == "999")
+        if(driverAll[i] == "NULL")
             continue;
         fileSave
                 << "INSERT INTO resultaat (resultaatID, raceID, score, bestlap, achievedIn, position, coureurID) VALUES ("
@@ -136,29 +154,31 @@ int SaveToDB::saveToFile(std::vector<std::string> givenNames, std::vector<std::s
     std::cout << "Saving kalender info" << std::endl;
     // fill sql statements for the table kalender
     for(int i = 0; i < raceDate.size(); i++)
-        fileSave << "INSERT INTO kalender (ID, raceID, datum) VALUES (" << i << ", " << i << ", " << raceDate[i] << ");" << std::endl;
+        fileSave << "INSERT INTO kalender (ID, raceID, datum) VALUES (" << i << ", " << i << ", '" << raceDate[i] << "');" << std::endl;
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     std::cout << "Starting on intermediair tables" << std::endl;
 
     std::cout << "Saving landcoureur info" << std::endl;
     // fill sql statements for landcoureur table
-    for(int i = 0; i < nationalities.size(); i++)
-        fileSave << "INSERT IGNORE INTO landCoureur (ID, landID, coureurID) VALUES (" << i << ", "<< getCountries.countryConverter(nationalities[i]) << ", " << permanentNumbers[i] << ");" << std::endl;
+    for(int i = 0; i < nationalities.size(); i++) {
+        if(permanentNumbers[i] == "38")
+            break;
+        fileSave << "INSERT IGNORE INTO landCoureur (ID, landID, coureurID) VALUES (" << i << ", "
+                 << getCountries.countryConverter(nationalities[i]) << ", " << permanentNumbers[i] << ");" << std::endl;
+    }
 
     std::cout << "Saving teamcoureur info" << std::endl;
     // fill sql statements for teamcoureur table
     for(int i = 0; i < teams.size(); i++)
-        fileSave << "INSERT IGNORE INTO teamCoureur (ID, teamID, coureurID) VALUES (" << i << ", '"<< teams[driverIds[i]][0] << "', " << permanentNumbers[i] << ");" << std::endl;
+        fileSave << "INSERT IGNORE INTO teamCoureur (ID, teamID, coureurID) VALUES (" << i << ", "<< teamMap[teams[driverIds[i]][0]] << ", " << permanentNumbers[i] << ");" << std::endl;
 
-    for(int i = 0; i < driverAll.size(); i++) {
-        if(driverAll[i] == "999")
-            continue;
-        fileSave << "INSERT INTO coureurResultaat (ID, resultaatID, coureurID) VALUES (" << i << ", " << i << ", "
-                 << driverAll[i] << ");" << std::endl;
-    }
-
-    // kalenderteam? Hoe willen we dat doen?!?
+//    for(int i = 0; i < driverAll.size(); i++) {
+////        if(driverAll[i] == "999")
+////            continue;
+//        fileSave << "INSERT INTO coureurResultaat (ID, resultaatID, coureurID) VALUES (" << i << ", " << i << ", "
+//                 << driverAll[i] << ");" << std::endl;
+//    }
 
     fileSave.close();
 
