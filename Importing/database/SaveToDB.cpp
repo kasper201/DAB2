@@ -46,7 +46,8 @@ int SaveToDB::saveToFile(std::vector<std::string> givenNames, std::vector<std::s
                          std::vector<std::string> permanentNumbers, std::vector<std::string> fullNames, std::vector<std::string> driverIds,
                          std::map<std::string, std::vector<std::string>> teams, std::vector<std::string> circuit, std::vector<std::string> country,
                          std::vector<std::string> circuitLength,  std::vector<std::string> raceDate, std::vector<std::string> time,
-                         std::vector<std::string> position, std::vector<std::string> points, std::vector<std::string> driverAll, std::vector<std::string> type) {
+                         std::vector<std::string> position, std::vector<std::string> points, std::vector<std::string> driverAll,
+                         std::vector<std::string> type, std::vector<std::string> fastestLapTimeAll, std::vector<std::string> fastestLapNrAll) {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // get full path of executing application
     std::cout << "Getting path of executing application" << std::endl;
@@ -95,30 +96,42 @@ int SaveToDB::saveToFile(std::vector<std::string> givenNames, std::vector<std::s
         fileSave << "INSERT IGNORE INTO coureur (coureurID, naam, foto) VALUES (" << permanentNumbers[i] << ", '" << fullNames[i] << "', LOAD_FILE('" << path << familyNames[i] << ".png'));" << std::endl;
 
     std::cout << "Saving team info" << std::endl;
+    std::map<std::string, int> teamIds;
     // fill sql statements for the table team
     for (int i = 0; i < teams.size(); i++)
-        fileSave << "INSERT IGNORE INTO team (ID, naam) VALUES (" << i << ", '" << teams[driverIds[i]][0] << "');"
-                 << std::endl;
+    {
+        if(teamIds.find(teams[driverIds[i]][0]) == teamIds.end())
+        {
+            teamIds[teams[driverIds[i]][0]] = i;
+            fileSave << "INSERT IGNORE INTO team (ID, naam) VALUES (" << i << ", '" << teams[driverIds[i]][0] << "');" << std::endl;
+        }
+    }
 
     std::cout << "Saving circuit info" << std::endl;
+    std::map<std::string, int> circuitIds;
     // fill sql statements for the table circuit
     for (int i = 0; i < circuit.size(); i++)
     {
         std::cout << "Country: " << country[i] << std::endl;
         std::cout << "Location: " << getCountries.countryConverter(country[i]) << std::endl;
+        circuitIds[circuit[i]] = i;
         fileSave << "INSERT IGNORE INTO circuit (ID, circuitNaam, landID, lengte, foto) VALUES (" << i << ", '" << circuit[i] << "', " << getCountries.countryConverter(country[i]) << ", " << circuitLength[i] << ", LOAD_FILE('" << path << circuit[i] << ".png" << "'));" << std::endl;
     }
 
     std::cout << "Saving result info" << std::endl;
     // fill sql statements for the table result
-    for(int i = 0; i < driverAll.size(); i++) // might be issues with saving etc
-        fileSave << "INSERT INTO resultaat (resultaatID, score, position) VALUES (" << i << ", " << points[i] << ", " << position[i] << ");" << std::endl;
+    for(int i = 0; i < fastestLapNrAll.size(); i++) // might be issues with saving etc
+        fileSave << "INSERT INTO resultaat (resultaatID, score, bestlap, achievedIn, position, coureurID) VALUES (" << i << ", " << points[i] << ", " << fastestLapTimeAll[i] << ", " << fastestLapNrAll[i] << ", " << position[i] << ", " << driverAll[i] << ");" << std::endl;
 
     std::cout << "Saving race info" << std::endl;
     // fill sql statements for the table race
-    for(int i = 0; i < type.size(); i++)
+    for(int i = 0; i < type.size(); i++) {
         // id, circuitID, landID, resultID, type
-//        fileSave << "INSERT INTO race (ID, circuitID, landID, resultID, type) VALUES (" << i << ", " << i << ", " << getCountries.countryConverter(country[i]) << ", " << i*20 << ", " << type[i] << ");" << std::endl;
+        for (int j = 0; (i + j) < driverIds.size(); j++) {
+            fileSave << "INSERT INTO race (ID, circuitID, resultID, type) VALUES (" << i << ", "
+                     << circuitIds[circuit[i]] << ", " << i + j << ", " << type[i] << ");" << std::endl;
+        }
+    }
 
     std::cout << "Saving kalender info" << std::endl;
     // fill sql statements for the table kalender
@@ -128,15 +141,10 @@ int SaveToDB::saveToFile(std::vector<std::string> givenNames, std::vector<std::s
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     std::cout << "Starting on intermediair tables" << std::endl;
 
-    std::cout << "Saving landcoureur info" << std::endl;
-    // fill sql statements for landcoureur table
-    for(int i = 0; i < nationalities.size(); i++)
-        fileSave << "INSERT IGNORE INTO landCoureur (ID, landID, coureurID) VALUES (" << i << ", "<< getCountries.countryConverter(nationalities[i]) << ", " << permanentNumbers[i] << ");" << std::endl;
-
     std::cout << "Saving teamcoureur info" << std::endl;
     // fill sql statements for teamcoureur table
     for(int i = 0; i < teams.size(); i++)
-        fileSave << "INSERT IGNORE INTO teamCoureur (ID, teamID, coureurID) VALUES (" << i << ", '"<< teams[driverIds[i]][0] << "', " << permanentNumbers[i] << ");" << std::endl;
+        fileSave << "INSERT IGNORE INTO teamCoureur (ID, teamID, coureurID) VALUES (" << i << ", "<< teamIds[teams[driverIds[i]][0]] << ", " << permanentNumbers[i] << ");" << std::endl;
 
     for(int i = 0; i < driverAll.size(); i++)
         fileSave << "INSERT INTO coureurResultaat (ID, resultaatID, coureurID) VALUES (" << i << ", " << i << ", " << driverAll[i] << ");" << std::endl;
