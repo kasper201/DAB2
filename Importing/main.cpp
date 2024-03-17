@@ -53,20 +53,21 @@ int main() {
                                 permanentNumbers, fullNames, driverIds,
                                 circuit, country, circuitLength,
                                 dateAll, time, driverAll, position,
-                                points, type, location,
+                                points, type, locationLAT, circuitLAT,
                                 fastestLapTimeAll, fastestLapNrAll = {""};
     std::map<std::string, std::vector<std::string>> teams;
     int year = 2023;
     for(int i = 0; i + year <= 2024; i++){
         driverinfo.driver(year + i, givenNames, familyNames, nationalities, permanentNumbers, fullNames, driverIds, teams);
-        circuitInfo.circuit(year + i, circuit, country, circuitLength);
+        circuitInfo.circuit(year + i, circuit, country, circuitLength, circuitLAT);
         for(int j = 1; j <= getAmountOfRaces(year + i); j++) {
-            results.results(year + i, j, dateAll, time, driverAll, position, points, type, location, fastestLapTimeAll, fastestLapNrAll);
+            results.results(year + i, j, dateAll, time, driverAll, position, points, type, locationLAT, fastestLapTimeAll, fastestLapNrAll);
             std::cout << "Sizes result" << fastestLapNrAll.size() << " " << fastestLapTimeAll.size() << " " << driverAll.size() << " " << points.size() << std::endl;
         }
     }
 
-    saveToDB.saveToFile(givenNames, familyNames, nationalities, permanentNumbers, fullNames, driverIds, teams, circuit, country, circuitLength, dateAll, time, position, points, driverAll, type, fastestLapTimeAll, fastestLapNrAll);
+    saveToDB.saveToFile(givenNames, familyNames, nationalities, permanentNumbers, fullNames, driverIds, teams, circuit, country, circuitLength,
+                        dateAll, time, position, points, driverAll, type, fastestLapTimeAll, fastestLapNrAll, locationLAT, circuitLAT);
 
     return 0;
 }

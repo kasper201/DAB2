@@ -14,7 +14,7 @@ class CircuitInfo {
 public:
     CircuitInfo();
     ~CircuitInfo();
-    int circuit(int year, std::vector<std::string> &circuit, std::vector<std::string> &country, std::vector<std::string> &circuitLength);
+    int circuit(int year, std::vector<std::string> &circuit, std::vector<std::string> &country, std::vector<std::string> &circuitLength, std::vector<std::string> &LATlocation);
     std::string findInHtml(std::string html);
     std::string findCircuitLength(int circuitNr, int year);
     int circuitImage(std::string circuitC); // corrected circuit

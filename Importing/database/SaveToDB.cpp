@@ -40,6 +40,10 @@ SaveToDB::~SaveToDB() {
  * @param position
  * @param points
  * @param type
+ * @param fastestLapTimeAll
+ * @param fastestLapNrAll
+ * @param locationLAT
+ * @param circuitLAT
  * @return 0 by default, 1 if the sizes of the vectors of the driver are not the same
  */
 int SaveToDB::saveToFile(std::vector<std::string> givenNames, std::vector<std::string> familyNames, std::vector<std::string> nationalities,
@@ -47,7 +51,8 @@ int SaveToDB::saveToFile(std::vector<std::string> givenNames, std::vector<std::s
                          std::map<std::string, std::vector<std::string>> teams, std::vector<std::string> circuit, std::vector<std::string> country,
                          std::vector<std::string> circuitLength,  std::vector<std::string> raceDate, std::vector<std::string> time,
                          std::vector<std::string> position, std::vector<std::string> points, std::vector<std::string> driverAll,
-                         std::vector<std::string> type, std::vector<std::string> fastestLapTimeAll, std::vector<std::string> fastestLapNrAll) {
+                         std::vector<std::string> type, std::vector<std::string> fastestLapTimeAll, std::vector<std::string> fastestLapNrAll,
+                         std::vector<std::string> locationLAT, std::vector<std::string> circuitLAT) {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // get full path of executing application
     std::cout << "Getting path of executing application" << std::endl;
@@ -73,23 +78,6 @@ int SaveToDB::saveToFile(std::vector<std::string> givenNames, std::vector<std::s
     std::cout << "Saving all countries to database" << std::endl;
     getCountries.saveAllCountries(fileSave);
 
-//    if (givenNames.size() != familyNames.size() || givenNames.size() != nationalities.size() ||
-//        givenNames.size() != permanentNumbers.size() || givenNames.size() != fullNames.size() ||
-//        givenNames.size() != driverIds.size()) {
-//        std::cerr << "Error: the sizes of the vectors are not the same" <<std::endl;
-//        if(givenNames.size() != familyNames.size())
-//            std::cerr << "Size of givenNames: " << givenNames.size() << " size of familyNames: " << familyNames.size() << std::endl;
-//        if(givenNames.size() != nationalities.size())
-//            std::cerr << "Size of givenNames: " << givenNames.size() << " size of nationalities: " << nationalities.size() << std::endl;
-//        if(givenNames.size() != permanentNumbers.size())
-//            std::cerr << "Size of givenNames: " << givenNames.size() << " size of permanentNumbers: " << permanentNumbers.size() << std::endl;
-//        if(givenNames.size() != fullNames.size())
-//            std::cerr << "Size of givenNames: " << givenNames.size() << " size of fullNames: " << fullNames.size() << std::endl;
-//        if(givenNames.size() != driverIds.size())
-//            std::cerr << "Size of givenNames: " << givenNames.size() << " size of driverIds: " << driverIds.size() << std::endl;
-//            return 1;
-//    }
-    //std::cout << "size of givenNames: " << givenNames.size() << "familyNames: " << familyNames.size() << "nationalities: " << nationalities.size() << "permanentNumbers: " << permanentNumbers.size() << "fullNames: " << fullNames.size() << "driverIds: " << driverIds.size() << std::endl;
     std::cout << "Saving coureur info" << std::endl;
     // fill sql statements for the table coureur while using the permanent numbers as the id this is only possible for any driver after 2015
     for (int i = 0; i < givenNames.size(); i++)
@@ -102,24 +90,48 @@ int SaveToDB::saveToFile(std::vector<std::string> givenNames, std::vector<std::s
                  << std::endl;
 
     std::cout << "Saving circuit info" << std::endl;
+    std::map<std::string, std::string> circuitMap;
     // fill sql statements for the table circuit
     for (int i = 0; i < circuit.size(); i++)
     {
-        std::cout << "Country: " << country[i] << std::endl;
-        std::cout << "Location: " << getCountries.countryConverter(country[i]) << std::endl;
-        fileSave << "INSERT IGNORE INTO circuit (ID, circuitNaam, landID, lengte, foto) VALUES (" << i << ", '" << circuit[i] << "', " << getCountries.countryConverter(country[i]) << ", " << circuitLength[i] << ", LOAD_FILE('" << path << circuit[i] << ".png" << "'));" << std::endl;
+//        std::cout << "Country: " << country[i] << std::endl;
+//        std::cout << "Location: " << getCountries.countryConverter(country[i]) << std::endl;
+        if(circuitMap.find(circuitLAT[i]) == circuitMap.end()) {
+            circuitMap[circuitLAT[i]] = circuit[i];
+            std::cout << "Circuit: " << circuit[i] << " CircuitLAT: " << circuitLAT[i] << std::endl;
+            fileSave << "INSERT IGNORE INTO circuit (ID, circuitNaam, landID, lengte, foto) VALUES (" << i << ", '"
+                     << circuit[i] << "', " << getCountries.countryConverter(country[i]) << ", " << circuitLength[i]
+                     << ", LOAD_FILE('" << path << circuit[i] << ".png" << "'));" << std::endl;
+        }
     }
 
-    std::cout << "Saving result info" << std::endl;
+    std::cout << "Saving race info" << std::endl;
+    std::cout << "SIZES LOCATIONLAT: " << locationLAT.size() << " " << type.size() << std::endl;
+    // fill sql statements for the table race
+    for(int i = 0; i < type.size(); i++) {
+        // id, circuitId, resultID, type
+        if(circuitMap.find(locationLAT[i]) == circuitMap.end())
+        {
+            std::cerr << "Circuit not found" << std::endl;
+        } else {
+            std::cout << "LocationLAT: " << locationLAT[i] << std::endl;
+            fileSave << "INSERT INTO race (ID, circuitID, type) VALUES (" << i << ", '" << circuitMap[locationLAT[i]]
+                     << "', '"
+                     << type[i] << "');" << std::endl;
+        }
+    }
+
+        std::cout << "Saving result info" << std::endl;
     // fill sql statements for the table result
     for(int i = 0; i < driverAll.size(); i++) // might be issues with saving etc
-        fileSave << "INSERT INTO resultaat (resultaatID, score, position) VALUES (" << i << ", " << points[i] << ", " << position[i] << ");" << std::endl;
-
-    std::cout << "Saving race info" << std::endl;
-    // fill sql statements for the table race
-    for(int i = 0; i < type.size(); i++)
-        // id, circuitID, landID, resultID, type
-//        fileSave << "INSERT INTO race (ID, circuitID, landID, resultID, type) VALUES (" << i << ", " << i << ", " << getCountries.countryConverter(country[i]) << ", " << i*20 << ", " << type[i] << ");" << std::endl;
+    {
+        if(fastestLapNrAll[i] == "999")
+            continue;
+        fileSave
+                << "INSERT INTO resultaat (resultaatID, raceID, score, bestlap, achievedIn, position, coureurID) VALUES ("
+                << i << ", " << (i / 20) << ", " << points[i] << ", '" << fastestLapTimeAll[i] << "', "
+                << fastestLapNrAll[i] << ", " << position[i] << ", " << driverAll[i] << ");" << std::endl;
+    }
 
     std::cout << "Saving kalender info" << std::endl;
     // fill sql statements for the table kalender
@@ -139,8 +151,12 @@ int SaveToDB::saveToFile(std::vector<std::string> givenNames, std::vector<std::s
     for(int i = 0; i < teams.size(); i++)
         fileSave << "INSERT IGNORE INTO teamCoureur (ID, teamID, coureurID) VALUES (" << i << ", '"<< teams[driverIds[i]][0] << "', " << permanentNumbers[i] << ");" << std::endl;
 
-    for(int i = 0; i < driverAll.size(); i++)
-        fileSave << "INSERT INTO coureurResultaat (ID, resultaatID, coureurID) VALUES (" << i << ", " << i << ", " << driverAll[i] << ");" << std::endl;
+    for(int i = 0; i < driverAll.size(); i++) {
+        if(driverAll[i] == "999")
+            continue;
+        fileSave << "INSERT INTO coureurResultaat (ID, resultaatID, coureurID) VALUES (" << i << ", " << i << ", "
+                 << driverAll[i] << ");" << std::endl;
+    }
 
     // kalenderteam? Hoe willen we dat doen?!?
 

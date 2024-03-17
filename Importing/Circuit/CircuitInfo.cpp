@@ -19,8 +19,8 @@ CircuitInfo::~CircuitInfo() {
 
 }
 
-int CircuitInfo::circuit(int year, std::vector<std::string> &circuit, std::vector<std::string> &country, std::vector<std::string> &circuitLength) {
-    std::string url = "https://ergast.com/api/f1/2023/circuits.json";
+int CircuitInfo::circuit(int year, std::vector<std::string> &circuit, std::vector<std::string> &country, std::vector<std::string> &circuitLength, std::vector<std::string> &LATlocation) {
+    std::string url = "https://ergast.com/api/f1/" + std::to_string(year) + "/circuits.json";
     std::string response = request.getRequest(url);
 //    std::cout << "Response: " << response << std::endl;
 
@@ -56,6 +56,11 @@ int CircuitInfo::circuit(int year, std::vector<std::string> &circuit, std::vecto
             stream >> std::quoted(countryName);
             country.push_back(countryName);
             std::cout << "Country: " << countryName << std::endl;
+        } else if(token == "\"lat\":") {
+            std::string lat;
+            stream >> std::quoted(lat);
+            LATlocation.push_back(lat);
+            std::cout << "Latitude: " << lat << std::endl;
         }
     }
     for(int i = 0; i < circuit.size(); i++) {

@@ -79,10 +79,11 @@ int Results::results(int year, int race, std::vector<std::string> &dateAll, std:
             std::string pointsName;
             stream >> std::quoted(pointsName);
             points.push_back(pointsName);
-        } else if(token == "\"country\":") {
+        } else if(token == "\"lat\":") {
             std::string countryName;
             stream >> std::quoted(countryName);
             this->location.push_back(countryName);
+            this->type.push_back("Normal");
         } else if(token == "\"FastestLap\":") {
             stream >> token;
             stream >> token;
@@ -90,10 +91,10 @@ int Results::results(int year, int race, std::vector<std::string> &dateAll, std:
                 stream >> token;
                 stream >> token;
                 if (token == "\"lap\":") {
-                    stream >> token;
                     std::string lap;
                     stream >> std::quoted(lap);
                     fastestLapNr.push_back(lap);
+                    stream >> token;
                     stream >> token;
                     stream >> token;
                     stream >> token;
@@ -107,13 +108,17 @@ int Results::results(int year, int race, std::vector<std::string> &dateAll, std:
             }
         }
     }
-
-    this->type.push_back("Normal");
-
     if(getSprintResults(year, race) == 1) {
         std::cout << "No sprint results found" << std::endl;
     }
 
+    while(fastestLapNr.size() < points.size()) {
+        fastestLapNr.push_back("999");
+        fastestLapTime.push_back("999");
+    }
+    while(driver.size() < points.size()) {
+        driver.push_back("999");
+    }
     // transfer data to main
     dateAll = date;
     timeAll = time;
@@ -184,10 +189,11 @@ int Results::getSprintResults(int year, int race) {
             std::string pointsName;
             stream >> std::quoted(pointsName);
             points.push_back(pointsName);
-        } else if(token == "\"country\":") {
+        } else if(token == "\"lat\":") {
             std::string countryName;
             stream >> std::quoted(countryName);
             this->location.push_back(countryName);
+            type.push_back("Sprint"); // blursed solution
         } else if(token == "\"FastestLap\":") {
             stream >> token;
             stream >> token;
@@ -212,7 +218,5 @@ int Results::getSprintResults(int year, int race) {
             }
         }
     }
-
-    type.push_back("Sprint");
     return 0;
 }

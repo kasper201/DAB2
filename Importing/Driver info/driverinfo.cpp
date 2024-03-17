@@ -24,7 +24,7 @@ int driverinfo::driver(int year,
                        std::vector<std::string> &fullNames, std::vector<std::string> &driverIds,
                        std::map<std::string, std::vector<std::string>> &teamsIn) {
     this->year = year;
-    std::string url = "https://ergast.com/api/f1/2023/drivers.json";
+    std::string url = "https://ergast.com/api/f1/" + std::to_string(year) + "/drivers.json";
     std::string response = request.getRequest(url);
     std::cout << "Response: " << response << std::endl;
 

@@ -61,6 +61,7 @@ body {
 
 .textblock1 {
     top: -10px;
+    left: 20px;
     position: relative;
     width: 100%;
     text-transform: uppercase;
@@ -68,7 +69,13 @@ body {
     font-weight: bold;
 }
 
+.textblock1 h1
+{
+    color: #C00000;
+}
+
 .textblock1 table tr td {
+    left: 10px;
     padding: 20px;
     border-bottom: 1px solid #666666;
 }
