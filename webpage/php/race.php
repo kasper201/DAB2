@@ -19,12 +19,13 @@ if ($mysqli->connect_error) {
     exit;
 }
 
-$sql = "SELECT * FROM landCoureur WHERE coureurID = " . 33;
+$sql = "SELECT * FROM coureur WHERE coureurID = " . 6;
 $result = $mysqli->query($sql);
 
 if ($result->num_rows > 0) {
     // Fetch the first row
     $row = $result->fetch_assoc();
+    $row['foto'] = base64_encode($row['foto']);
 
     // Return circuit information as JSON
     header('Content-Type: application/json');

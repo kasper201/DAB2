@@ -46,6 +46,10 @@
                     <td>Started On Pole position:</td>
                     <td id="StartPole">Loading...</td>
                 </tr>
+                <tr>
+                    <td>Race Type:</td>
+                    <td id="RaceType">Loading...</td>
+                </tr>
             </table>
         </div>
     </div>
@@ -74,11 +78,12 @@
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
+            console.log("ResponseB4: " + this.responseText); // Add this line
             let raceData = JSON.parse(this.responseText);
 
             // Update HTML elements with race information
-            // document.getElementById("winner").innerText = raceData['ID'];
-            document.getElementById("circuit").src = raceData['circuitImage'];
+            document.getElementById("winner").innerText = raceData['naam'];
+            document.getElementById("circuit").src = 'data:image/jpeg;base64,' + raceData['foto'];
         } else if (this.status == 500) {
             alert("You are not logged in");
             window.location.href = "./login.html";
