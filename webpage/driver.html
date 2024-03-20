@@ -15,10 +15,10 @@
                     <td>name:</td>
                     <td id="name">Loading...</td>
                 </tr>
-                <tr>
-                    <td>Gender:</td>
-                    <td id="Gender">Male</td>
-                </tr>
+<!--                <tr>-->
+<!--                    <td>Gender:</td>-->
+<!--                    <td id="Gender">Male</td>-->
+<!--                </tr>-->
                 <tr>
                     <td>Nationality:</td>
                     <td id="nationality">Loading...</td>
@@ -32,7 +32,8 @@
                     <td id="team">Loading...</td>
                 </tr>
             </table>
-            <img src="img/placeholder.jpg" id="flag1">
+            <img src="./img/nl.svg" id="flag1">
+            <img src="./img/nl.svg" id="flag2">
         </div>
         <div class="devider"></div>
         <div class="textblock2">
@@ -55,13 +56,45 @@
                     <td id="thirdPlaces">Loading...</td>
                 </tr>
             </table>
-            <img src="img/placeholder.jpg" id="flag2">
         </div>
     </div>
     <div class="portrait">
         <img src="img/placeholder.jpg" id="portrait">
     </div>
-    <script>
-
-    </script>
 </div>
+</body>
+<script>
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log("ResponseB4: " + this.responseText); // Add this line
+            if (this.responseText.trim() !== "") {
+                let raceData = JSON.parse(this.responseText);
+
+                // Update HTML elements with race information
+                document.getElementById("name").innerText = raceData['naam'];
+                document.getElementById("nationality").innerText = raceData['nationality'];
+                document.getElementById("2ndNationality").innerText = raceData['second nationality'];
+                document.getElementById("team").innerText = raceData['team'];
+                document.getElementById("points").innerText = raceData['Total points'];
+                document.getElementById("firstPlaces").innerText = raceData['First places'];
+                document.getElementById("secondPlaces").innerText = raceData['second places'];
+                document.getElementById("thirdPlaces").innerText = raceData['third places'];
+                document.getElementById("portrait").src = 'data:image/jpeg;base64,' + raceData['selfie'];
+            } else {
+                console.log("Empty response received");
+            }
+        } else if (this.status == 500) {
+            alert("You are not logged in");
+            window.location.href = "./login.html";
+        } else {
+            console.log("Error: " + this.status);
+            console.log("response: " + this.responseText);
+            console.log("State: " + this.readyState);
+        }
+    };
+    console.log("Sending request");
+    xhttp.open("GET", "./php/driver.php", true);
+    xhttp.send();
+</script>
+</html>

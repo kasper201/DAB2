@@ -44,6 +44,11 @@ body {
     display: inline-block;
 }
 
+#flag1, #flag2 {
+    width: 50px;
+    border-radius: 5px;
+}
+
 .textblock1 h1,
 .textblock2 h1 {
     color: #C00000; /* Change to the desired color for General information */
