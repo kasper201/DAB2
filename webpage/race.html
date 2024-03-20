@@ -7,6 +7,8 @@
 </head>
 <body>
 <div class="race">
+    <button class="RemRace" onclick="window.location.href='./php/remRace.php'">Delete Race</button>
+    <button class="AddRace" onclick="window.location.href='./php/addRace.php'">Add Race</button>
     <button class="BackButton" onclick="window.location.href='main.html'">Back</button>
     <div class="info">
         <div class="textblock1">
@@ -40,6 +42,10 @@
                     <td>Achieved in Round:</td>
                     <td id="AchievedIn">Loading...</td>
                 </tr>
+                <tr>
+                    <td>Started On Pole position:</td>
+                    <td id="StartPole">Loading...</td>
+                </tr>
             </table>
         </div>
     </div>
@@ -65,25 +71,8 @@
 </div>
 
 <script>
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'race.php', true);
 
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                var data = JSON.parse(xhr.responseText);
-
-                // Update the content dynamically
-                document.getElementById('circuitName').innerText = data.name;
-                document.getElementById('circuitLocation').innerText = data.location;
-                document.getElementById('circuitCountry').innerText = data.country;
-            } else {
-                console.error('Failed to fetch circuit information.');
-            }
-        }
-    };
-
-    xhr.send();
+    document.getElementById("winner").innerText = "Test";
 </script>
 </body>
 </html>

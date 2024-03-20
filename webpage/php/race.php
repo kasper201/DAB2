@@ -1,12 +1,11 @@
 <?php
 
-$servername = "your_mysql_server"; // Replace with your MySQL server name
-$username = "your_username";       // Replace with your MySQL username
-$password = "your_password";       // Replace with your MySQL password
-$database = "your_database";       // Replace with your MySQL database name
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $database);
+if(isset($_SESSION['db_connection']))
+{
+    $conn = $_SESSION['db_connection'];
+} else {
+    header("Location: ../login.html");
+}
 
 // Check connection
 if ($conn->connect_error) {
@@ -24,7 +23,8 @@ if ($result->num_rows > 0) {
     header('Content-Type: application/json');
     echo json_encode($row);
 } else {
-    echo "No circuit information found.";
+    echo '<script>alert("no circuit info found");</script>';
+    echo '<script>window.location.href = "../main.html";</script>';
 }
 
 // Close the connection
