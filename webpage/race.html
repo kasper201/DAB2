@@ -71,8 +71,26 @@
 </div>
 
 <script>
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            let raceData = JSON.parse(this.responseText);
 
-    document.getElementById("winner").innerText = "Test";
+            // Update HTML elements with race information
+            // document.getElementById("winner").innerText = raceData['ID'];
+            document.getElementById("circuit").src = raceData['circuitImage'];
+        } else if (this.status == 500) {
+            alert("You are not logged in");
+            window.location.href = "./login.html";
+        } else {
+            console.log("Error: " + this.status);
+            console.log("response: " + this.responseText);
+            console.log("State: " + this.readyState);
+        }
+    };
+    console.log("Sending request");
+    xhttp.open("GET", "./php/race.php", true);
+    xhttp.send();
 </script>
 </body>
 </html>

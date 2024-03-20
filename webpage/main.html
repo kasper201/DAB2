@@ -11,29 +11,35 @@
         <button class="AltTbl" onclick="window.location.href='AlterTable.html'">Alter Table</button>
         <div class="searchBlockBackground" id="searchBlockBackground1">
             <div class="searchBlock" id="searchBlock1">
-                <form action="season.html" method="post">
+                <form action="season.html" method="post" onsubmit="storeSearch()">
                     <p>Season</p>
                     <input type="text" name="search" placeholder="Search.." required="required">
                     <input type="submit" value="Search">
                 </form>
 
-                <form action="race.html" method="post">
+                <form action="race.html" method="post" onsubmit="storeSearch()">
                     <p>Race</p>
                     <input type="text" name="search" placeholder="Search.." required="required">
                     <input type="submit" value="Search">
                 </form>
 
-                <form action="circuit.html" method="post">
+                <form action="circuit.html" method="post" onsubmit="storeSearch()">
                     <p>Circuit</p>
                     <input type="text" name="search" placeholder="Search.." required="required">
                     <input type="submit" value="Search">
                 </form>
 
-                <form action="driver.html" method="post">
+                <form action="driver.html" method="post" onsubmit="storeSearch()">
                     <p>Driver</p>
                     <input type="text" name="search" placeholder="Search.."required="required">
                     <input type="submit" value="Search">
                 </form>
+                <script> <!-- would normally put this in a different file, but I'm too lazy atm -->
+                    function storeSearch() {
+                        let search = document.querySelector('input[name="search"]').value;
+                        localStorage.setItem('search', search);
+                    }
+                </script>
             </div>
         </div>
     </div>
