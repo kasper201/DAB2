@@ -73,7 +73,7 @@
         </div>
     </div>
 </div>
-
+</body>
 <script>
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -92,13 +92,12 @@
                 document.getElementById("AchievedIn").innerText = raceData['ACHIEVED IN ROUND'];
                 document.getElementById("StartPole").innerText = raceData['STARTED ON POLE POSITION'];
                 document.getElementById("RaceType").innerText = raceData['race type'];
-                document.getElementById("circuitName").innerText = raceData['circuit name'];
-                document.getElementById("circuitLength").innerText = raceData['circuit length(km)'];
+                document.getElementById("circuitName").innerText = raceData['circuit naam'];
+                document.getElementById("circuitLength").innerText = raceData['circuit lengt(km)']; // jasper heeft n prachtige typ fout gemaakt
                 document.getElementById("circuitCountry").innerText = raceData['country'];
-                document.getElementById("circuit").src = raceData['circuit image'];
-
+                document.getElementById("circuit").src = raceData['circuit foto'];
             } else {
-                alert("Invalid response received, likely incorrect season or circuit");
+                alert("Empty response received, likely incorrect name");
                 console.log("Empty response received");
             }
         } else if (this.status == 500) {
@@ -114,5 +113,4 @@
     xhttp.open("GET", "./php/race.php", true);
     xhttp.send();
 </script>
-</body>
 </html>
