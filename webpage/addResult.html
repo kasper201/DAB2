@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Result</title>
+</head>
+<body>
+<form action="./php/addRace.php" method="post">
+  <p>Season</p>
+  <input type="text" name="ResultID" placeholder="Enter ResultID" required="required">
+  <input type="text" name="RaceID" placeholder="Enter RaceID" required="required">
+  <input type="text" name="score" placeholder="Enter points" required="required">
+  <input type="text" name="best_lap" placeholder="Enter best lapNR" required="required">
+  <input type="text" name="coureur_id" placeholder="Enter coureur_id" required="required">
+  <input type="text" name="position" placeholder="Enter position" required="required">
+  <input type="text" name="achieved_in" placeholder="Enter achieved" required="required">
+  <input type="hidden" name="formType" value="season">
+  <input type="submit" value="Search">
+</form>
+</body>
+</html>

@@ -10,9 +10,8 @@ error_log($raceID);
 
 // Call the stored procedure
 $sql = "CALL deleteResultaat('$raceID')";
-$result = $mysqli->query($sql);
-
-if ($mysqli->error) {
+echo '<script>alert("SQL is: ' . $sql . '");</script>';
+if (!$mysqli->multi_query($sql)) {
     error_log("SQL error: " . $mysqli->error);
     http_response_code(500);
     echo "SQL error: " . $mysqli->error;
@@ -23,4 +22,4 @@ if ($mysqli->error) {
 //header('Location: ../main.html');
 //exit;
 
-error_log($result);
+echo '<script>alert("Failed to connect to MySQL: ' . $mysqli->error . '");</script>';

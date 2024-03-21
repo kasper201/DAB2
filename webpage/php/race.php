@@ -6,8 +6,9 @@ $mysqli = getMysqli();
 // Retrieve the season and circuit name from the POST request
 $season = $mysqli->real_escape_string($_SESSION['year']);
 $circuit = $mysqli->real_escape_string($_SESSION['search']);
+$type = $mysqli->real_escape_string($_SESSION['type']);
 
-$sql = "SELECT * FROM race_view WHERE `season` = '$season' AND `circuit naam` = '$circuit'";
+$sql = "SELECT * FROM race_view WHERE `season` = '$season' AND `circuit naam` = '$circuit' AND `race type` = '$_SESSION[type]'";
 $result = $mysqli->query($sql);
 error_log("Number of rows: " . $result->num_rows); // Add this line
 

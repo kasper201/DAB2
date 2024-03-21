@@ -27,7 +27,7 @@ body {
 
 .info {
     display: grid;
-    position: relative;
+    position: absolute;
     height: 100vh;
     width: 60%;
     background-color: #1e1f22;

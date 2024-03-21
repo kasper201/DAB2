@@ -5,6 +5,9 @@ if (isset($_POST['search'])) { // Check if the search value is set in the POST r
     $_SESSION['search'] = $_POST['search']; // Set the search value in the session
 }
 
+$type = isset($_POST['type']) ? 'sprint' : 'normal';
+$_SESSION['type'] = $type;
+
 // Check which form was submitted and redirect to the appropriate page
 switch ($_POST['formType']) {
     case 'season':
