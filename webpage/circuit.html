@@ -55,9 +55,9 @@
                 // Update HTML elements with race information
                 document.getElementById("name").innerText = raceData['circuit naam'];
                 document.getElementById("country").innerText = raceData['country'];
-                document.getElementById("length").innerText = raceData['circuit lengt(km)']; // jasper heeft n gigantisch mooie typ fout gemaakt
-                document.getElementById("lapRecord").innerText = raceData['record holder'];
-                document.getElementById("lapRecordHolder").innerText = raceData['best lap'];
+                document.getElementById("length").innerText = raceData['circuit lengt(km)'] + " km"; // jasper heeft n gigantisch mooie typ fout gemaakt
+                document.getElementById("lapRecordHolder").innerText = raceData['record holder'];
+                document.getElementById("lapRecord").innerText = raceData['best lap'];
                 document.getElementById("latestSeason").innerText = raceData['last season'];
                 // update placeholder image with actual image
             } else {

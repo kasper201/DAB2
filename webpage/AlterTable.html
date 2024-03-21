@@ -2,10 +2,45 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Alter Table</title>
+    <title>Audit Table</title>
+    <link rel="stylesheet" type="text/css" href="design/AlterTable.css">
 </head>
 <body>
-<h1>select * FROM audit_log;</h1>
 <button class="BackButton" onclick="window.location.href='main.html'">Back</button>
+<div id="logContainer"></div>
 </body>
+<script>
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var logs = JSON.parse(this.responseText);
+            var logContainer = document.getElementById('logContainer');
+            var table = document.createElement('table');
+            var thead = document.createElement('thead');
+            var headers = ['User ID', 'Action', 'Timestamp', 'Record ID', 'Old Value', 'New Value'];
+            var tr = document.createElement('tr');
+            headers.forEach(function(header) {
+                var th = document.createElement('th');
+                th.innerText = header;
+                tr.appendChild(th);
+            });
+            thead.appendChild(tr);
+            table.appendChild(thead);
+            for (var i = 0; i < logs.length; i++) {
+                var log = logs[i];
+                var tr = document.createElement('tr');
+                var data = [log.user, log.action, log.timestamp, log.record_id, log.old_value, log.new_value];
+                data.forEach(function(value) {
+                    var td = document.createElement('td');
+                    td.innerText = value;
+                    tr.appendChild(td);
+                });
+                table.appendChild(tr);
+            }
+            logContainer.appendChild(table);
+        }
+    };
+    xhttp.open("GET", "./php/auditLog.php", true);
+    xhttp.send();
+</script>
 </html>

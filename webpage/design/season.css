@@ -61,7 +61,7 @@ body {
 }
 
 .winnerInfo {
-    position: relative;
+    position: absolute;
     display: flex;
     flex-direction: column;
     z-index: 2;
@@ -69,20 +69,20 @@ body {
     width: 50%;
     height: auto;
     left: 25px;
-    bottom: 0;
+    top: 89px;
     wrap-option: nowrap;
 }
 
 .constructor {
-    position: relative;
+    position: absolute;
     display: flex;
     flex-direction: column;
     z-index: 2;
     box-sizing: border-box;
     width: 50%;
     height: auto;
-    left: 550px;
-    bottom: 306px
+    right: 0px;
+    top: 89px
 }
 
 .winnerPfp {

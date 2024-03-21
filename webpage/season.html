@@ -66,8 +66,15 @@
             if (this.responseText.trim() !== "") {
                 let raceData = JSON.parse(this.responseText);
 
-                /
-                // TODO: Add flags
+                document.getElementById("winner").innerHTML = raceData['driver_name'];
+                document.getElementById("nationality").innerHTML = raceData['nationality_adjectival'];
+                document.getElementById("points").innerHTML = raceData['total_points'];
+                document.getElementById("wins").innerHTML = raceData['wins'];
+                document.getElementById("constructor").innerHTML = raceData['team_name'];
+                document.getElementById("podiumPlaces").innerHTML = raceData['podium_places'];
+                document.getElementById("constructorPoints").innerHTML = raceData['team_points'];
+                document.getElementById("constructorWins").innerHTML = raceData['team_wins'];
+                document.getElementById("winnerPfp").src = "data:image/jpeg;base64," + raceData['coureur_foto'];
             } else {
                 alert("Empty response received, likely incorrect name");
                 console.log("Empty response received");

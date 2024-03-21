@@ -3,11 +3,11 @@ include 'getMySqli.php';
 
 $mysqli = getMysqli();
 
-// Retrieve the driver name from the POST request
+// Retrieve the season and circuit name from the POST request
 $season = $mysqli->real_escape_string($_SESSION['year']);
 $circuit = $mysqli->real_escape_string($_SESSION['search']);
 
-$sql = "SELECT `First place` FROM race_view WHERE `season` = '$season' AND `circuit naam` = '$circuit'";
+$sql = "SELECT * FROM race_view WHERE `season` = '$season' AND `circuit naam` = '$circuit'";
 $result = $mysqli->query($sql);
 error_log("Number of rows: " . $result->num_rows); // Add this line
 
@@ -28,7 +28,7 @@ if ($result->num_rows > 0) {
         }
     }
 
-//    $row['selfie'] = base64_encode($row['selfie']);
+    $row['circuit foto'] = base64_encode($row['circuit foto']);
     // Return circuit information as JSON
     header('Content-Type: application/json');
     echo json_encode($row);

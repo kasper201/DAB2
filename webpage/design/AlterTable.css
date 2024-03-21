@@ -10,3 +10,25 @@
     padding: 10px;
     cursor: pointer;
 }
+
+#logContainer table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#logContainer th, #logContainer td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#logContainer tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#logContainer th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #666666;
+    color: white;
+}

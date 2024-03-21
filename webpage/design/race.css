@@ -108,7 +108,8 @@ body {
     z-index: 2;
     box-sizing: border-box;
     border: 5px solid #C00000;
-    background-color: #C00000;
+    background-color: #666666;
+    overflow: auto;
 }
 
 .circuit img{
@@ -116,6 +117,7 @@ body {
     height: 60vh;
     object-fit: cover;
     border-radius: 10px;
+    opacity: 1;
 }
 
 .circuitInfo{
