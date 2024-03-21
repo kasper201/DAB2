@@ -58,4 +58,31 @@
     </div>
 </div>
 </body>
+<script>
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log("ResponseB4: " + this.responseText); // Add this line
+            if (this.responseText.trim() !== "") {
+                let raceData = JSON.parse(this.responseText);
+
+                /
+                // TODO: Add flags
+            } else {
+                alert("Empty response received, likely incorrect name");
+                console.log("Empty response received");
+            }
+        } else if (this.status == 500) {
+            alert("You are not logged in");
+            window.location.href = "./login.html";
+        } else {
+            console.log("Error: " + this.status);
+            console.log("response: " + this.responseText);
+            console.log("State: " + this.readyState);
+        }
+    };
+    console.log("Sending request");
+    xhttp.open("GET", "./php/season.php", true);
+    xhttp.send();
+</script>
 </html>

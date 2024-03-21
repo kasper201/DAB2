@@ -79,11 +79,28 @@
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             console.log("ResponseB4: " + this.responseText); // Add this line
-            let raceData = JSON.parse(this.responseText);
+            if (this.responseText.trim() !== "") {
+                let raceData = JSON.parse(this.responseText);
 
-            // Update HTML elements with race information
-            document.getElementById("winner").innerText = raceData['naam'];
-            document.getElementById("circuit").src = 'data:image/jpeg;base64,' + raceData['foto'];
+                // Update HTML elements with race information
+                document.getElementById("winner").innerText = raceData['First place'];
+                document.getElementById("second").innerText = raceData['Second place'];
+                document.getElementById("third").innerText = raceData['third place'];
+                document.getElementById("date").innerText = raceData['date'];
+                document.getElementById("season").innerText = raceData['season'];
+                document.getElementById("bestLap").innerText = raceData['best lap'];
+                document.getElementById("AchievedIn").innerText = raceData['ACHIEVED IN ROUND'];
+                document.getElementById("StartPole").innerText = raceData['STARTED ON POLE POSITION'];
+                document.getElementById("RaceType").innerText = raceData['race type'];
+                document.getElementById("circuitName").innerText = raceData['circuit name'];
+                document.getElementById("circuitLength").innerText = raceData['circuit length(km)'];
+                document.getElementById("circuitCountry").innerText = raceData['country'];
+                document.getElementById("circuit").src = raceData['circuit image'];
+
+            } else {
+                alert("Invalid response received, likely incorrect season or circuit");
+                console.log("Empty response received");
+            }
         } else if (this.status == 500) {
             alert("You are not logged in");
             window.location.href = "./login.html";

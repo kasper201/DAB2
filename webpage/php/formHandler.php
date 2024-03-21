@@ -11,6 +11,9 @@ switch ($_POST['formType']) {
         header("Location: ../season.html");
         break;
     case 'race':
+        if (isset($_POST['year'])) { // Check if the year value is set in the POST request
+            $_SESSION['year'] = $_POST['year']; // Set the year value in the session
+        }
         header("Location: ../race.html");
         break;
     case 'circuit':

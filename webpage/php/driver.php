@@ -29,6 +29,7 @@ if ($result->num_rows > 0) {
 
     $row['selfie'] = base64_encode($row['selfie']);
     $row['nationalflag'] = base64_encode($row['nationalflag']);
+    $row['nationalflag2'] = base64_encode($row['nationalflag2']);
     // Return circuit information as JSON
     header('Content-Type: application/json');
     echo json_encode($row);
