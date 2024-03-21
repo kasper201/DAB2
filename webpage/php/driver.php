@@ -4,7 +4,7 @@ include 'getMySqli.php';
 $mysqli = getMysqli();
 
 // Retrieve the driver name from the POST request
-$driver = $mysqli->real_escape_string($_SESSION['Driver']);
+$driver = $mysqli->real_escape_string($_SESSION['search']);
 
 $sql = "SELECT * FROM coureur_view WHERE naam = '$driver'";
 $result = $mysqli->query($sql);

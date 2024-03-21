@@ -11,35 +11,33 @@
         <button class="AltTbl" onclick="window.location.href='AlterTable.html'">Audit Rail</button>
         <div class="searchBlockBackground" id="searchBlockBackground1">
             <div class="searchBlock" id="searchBlock1">
-                <form action="season.html" method="post" onsubmit="storeSearch()">
+                <form action="./php/formHandler.php" method="post">
                     <p>Season</p>
-                    <input type="text" name="search" placeholder="Search.." required="required">
+                    <input type="text" name="search" placeholder="Enter Season" required="required">
+                    <input type="hidden" name="formType" value="season">
                     <input type="submit" value="Search">
                 </form>
 
-                <form action="race.html" method="post" onsubmit="storeSearch()">
+                <form action="./php/formHandler.php" method="post">
                     <p>Race</p>
-                    <input type="text" name="search" placeholder="Search.." required="required">
+                    <input type="text" name="search" placeholder="Enter Date" required="required">
+                    <input type="hidden" name="formType" value="race">
                     <input type="submit" value="Search">
                 </form>
 
-                <form action="circuit.html" method="post" onsubmit="storeSearch()">
+                <form action="./php/formHandler.php" method="post">
                     <p>Circuit</p>
-                    <input type="text" name="search" placeholder="Search.." required="required">
+                    <input type="text" name="search" placeholder="Enter circuit name" required="required">
+                    <input type="hidden" name="formType" value="circuit">
                     <input type="submit" value="Search">
                 </form>
 
-                <form action="driver.html" method="post" onsubmit="storeSearch()">
+                <form action="./php/formHandler.php" method="post">
                     <p>Driver</p>
-                    <input type="text" name="search" placeholder="Search.."required="required">
+                    <input type="text" name="search" placeholder="Enter driver name" required="required">
+                    <input type="hidden" name="formType" value="driver">
                     <input type="submit" value="Search">
                 </form>
-                <script> <!-- would normally put this in a different file, but I'm too lazy atm -->
-                    function storeSearch() {
-                        let search = document.querySelector('input[name="search"]').value;
-                        localStorage.setItem('search', search);
-                    }
-                </script>
             </div>
         </div>
     </div>
