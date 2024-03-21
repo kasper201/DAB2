@@ -7,7 +7,7 @@
 </head>
 <body>
 <div class="race">
-    <button class="RemRace" onclick="window.location.href='./php/remRace.php'">Delete Race</button>
+    <button class="RemRace" onclick="confirmDelete()">Delete Race</button>    <button class="UpdateRace" onclick="window.location.href='main.html'">Update Race</button>
     <button class="AddRace" onclick="window.location.href='./php/addRace.php'">Add Race</button>
     <button class="BackButton" onclick="window.location.href='main.html'">Back</button>
     <div class="info">
@@ -112,5 +112,15 @@
     console.log("Sending request");
     xhttp.open("GET", "./php/race.php", true);
     xhttp.send();
+
+    function confirmDelete() {
+        var r = confirm("Are you sure you want to delete this race?");
+        if (r == true) {
+            // User clicked OK, proceed with deletion
+            window.location.href = './php/deleteRace.php';
+        } else {
+            // User clicked Cancel, do nothing
+        }
+    }
 </script>
 </html>

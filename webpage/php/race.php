@@ -27,7 +27,7 @@ if ($result->num_rows > 0) {
             $row[$key] = "N/A"; // replace with default value
         }
     }
-
+    $_SESSION['raceID'] = $row['raceID'];
     $row['circuit foto'] = base64_encode($row['circuit foto']);
     // Return circuit information as JSON
     header('Content-Type: application/json');
