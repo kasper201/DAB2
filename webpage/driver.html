@@ -81,7 +81,11 @@
                 document.getElementById("secondPlaces").innerText = raceData['second places'];
                 document.getElementById("thirdPlaces").innerText = raceData['third places'];
                 document.getElementById("portrait").src = 'data:image/jpeg;base64,' + raceData['selfie'];
+                document.getElementById("flag1").src = 'data:image/jpeg;base64,' + raceData['nationalflag']; // make these unique once it works
+                document.getElementById("flag2").src = 'data:image/jpeg;base64,' + raceData['nationalflag'];
+                // TODO: Add flags
             } else {
+                alert("Empty response received, likely incorrect name");
                 console.log("Empty response received");
             }
         } else if (this.status == 500) {

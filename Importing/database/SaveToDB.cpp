@@ -180,6 +180,16 @@ int SaveToDB::saveToFile(std::vector<std::string> givenNames, std::vector<std::s
 //                 << driverAll[i] << ");" << std::endl;
 //    }
 
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    std::cout << "correcting loading of images" << std::endl;
+//    UPDATE test.coureur t
+//    SET t.foto = 315.04 kB [/home/flits/CLionProjects/DAB2/Importing/cmake-build-debug/Ricciardo.png]
+//    WHERE t.coureurID = 3;
+
+    for(int i = 0; i < familyNamesTemp.size(); i++) {
+        fileSave << "UPDATE test.coureur t SET t.foto = LOAD_FILE('" << path << familyNamesTemp[i] << ".png') WHERE t.coureurID = " << permanentNumbers[i] << ";" << std::endl;
+    }
+
     fileSave.close();
 
     return 0;

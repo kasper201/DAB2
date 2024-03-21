@@ -1,6 +1,7 @@
 <?php
+include 'getMySqli.php';
 
-session_start(); // Start the session
+$mysqli = getMysqli(); // Start the session
 
 // Retrieve the database credentials from the session
 $host = $_SESSION['db_host'];

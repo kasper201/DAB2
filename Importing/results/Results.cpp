@@ -177,7 +177,7 @@ int Results::getSprintResults(int year, int race) {
             if(!firstTime)
                 time.push_back(timeName);
             firstTime = false;
-        } else if(token == "\"driver\":") {
+        } else if(token == "\"permanentNumber\":") {
             std::string driverName;
             stream >> std::quoted(driverName);
             driver.push_back(driverName);
