@@ -89,7 +89,7 @@ int SaveToDB::saveToFile(std::vector<std::string> givenNames, std::vector<std::s
             break;
         familyNamesTemp.push_back(familyNames[i]);
         fileSave << "INSERT IGNORE INTO coureur (coureurID, naam, foto) VALUES (" << permanentNumbers[i] << ", '"
-                 << fullNames[i] << "', LOAD_FILE('" << path << familyNames[i] << ".png'));" << std::endl;
+                 << fullNames[i] << "', '" << path << familyNames[i] << ".png');" << std::endl;
     }
 
     std::cout << "Saving team info" << std::endl;
@@ -119,7 +119,7 @@ int SaveToDB::saveToFile(std::vector<std::string> givenNames, std::vector<std::s
             std::cout << "Circuit: " << circuit[i] << " CircuitLAT: " << circuitLAT[i] << std::endl;
             fileSave << "INSERT IGNORE INTO circuit (ID, circuitNaam, landID, lengte, foto) VALUES (" << i << ", '"
                      << circuit[i] << "', " << getCountries.countryConverter(country[i]) << ", " << circuitLength[i]
-                     << ", LOAD_FILE('" << path << circuit[i] << ".png" << "'));" << std::endl;
+                     << ", '" << path << circuit[i] << ".png" << "');" << std::endl;
         }
     }
 
@@ -187,7 +187,7 @@ int SaveToDB::saveToFile(std::vector<std::string> givenNames, std::vector<std::s
 //    WHERE t.coureurID = 3;
 
     for(int i = 0; i < familyNamesTemp.size(); i++) {
-        fileSave << "UPDATE test.coureur t SET t.foto = LOAD_FILE('" << path << familyNamesTemp[i] << ".png') WHERE t.coureurID = " << permanentNumbers[i] << ";" << std::endl;
+        fileSave << "UPDATE test.coureur t SET t.foto = '" << path << familyNamesTemp[i] << ".png' WHERE t.coureurID = " << permanentNumbers[i] << ";" << std::endl;
     }
 
     fileSave.close();

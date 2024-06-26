@@ -15,6 +15,8 @@ getImage::~getImage() {
 
 }
 
+std::string pathToWebPage = "/home/flits/CLionProjects/DAB2/webpage/img/";
+
 size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::ofstream* imageFile) {
     size_t totalSize = size * nmemb;
     imageFile->write((char*)contents, totalSize);
@@ -24,7 +26,7 @@ size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::ofstream* i
 int getImage::getTheImage(std::string url, std::string nameIn) {
     // Initialize cURL
     CURL* curl = curl_easy_init();
-    std::string name = (nameIn + ".png");
+    std::string name = (pathToWebPage + nameIn + ".png");
 
     if (curl) {
         // Open a file to write the image
