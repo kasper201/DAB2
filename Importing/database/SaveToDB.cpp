@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <utility>
 #include <unistd.h>
 
 #ifdef _WIN32
@@ -52,23 +53,24 @@ int SaveToDB::saveToFile(std::vector<std::string> givenNames, std::vector<std::s
                          std::vector<std::string> circuitLength,  std::vector<std::string> raceDate, std::vector<std::string> time,
                          std::vector<std::string> position, std::vector<std::string> points, std::vector<std::string> driverAll,
                          std::vector<std::string> type, std::vector<std::string> fastestLapTimeAll, std::vector<std::string> fastestLapNrAll,
-                         std::vector<std::string> locationLAT, std::vector<std::string> circuitLAT) {
+                         std::vector<std::string> locationLAT, std::vector<std::string> circuitLAT, std::string homePath) {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // get full path of executing application
-    std::cout << "Getting path of executing application" << std::endl;
-    char pBuf[256];
-    size_t len = sizeof(pBuf);
-#ifndef _WIN32
-    int bytes = MIN(readlink("/proc/self/exe", pBuf, len), len - 1);
-    if (bytes >= 0)
-        pBuf[bytes] = '\0';
-#else
-    GetModuleFileName(NULL, pBuf, len);
-#endif
-    std::cout << "Path: " << pBuf << std::endl;
-    std::string path = pBuf;
-    path = path.substr(0, path.find("Week2Deel2"));
-
+    // Obsolete
+//    // get full path of executing application
+//    std::cout << "Getting path of executing application" << std::endl;
+//    char pBuf[256];
+//    size_t len = sizeof(pBuf);
+//#ifndef _WIN32
+//    int bytes = MIN(readlink("/proc/self/exe", pBuf, len), len - 1);
+//    if (bytes >= 0)
+//        pBuf[bytes] = '\0';
+//#else
+//    GetModuleFileName(NULL, pBuf, len);
+//#endif
+//    std::cout << "Path: " << pBuf << std::endl;
+//    std::string path = pBuf;
+//    path = path.substr(0, path.find("Week2Deel2"));
+    std::string path = std::move(homePath);
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // save to database

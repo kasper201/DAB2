@@ -12,7 +12,10 @@ class getImage {
 public:
     getImage();
     virtual ~getImage();
-    int getTheImage(std::string url, std::string name);
+    void setPath(std::string pathIn);
+    int getTheImage(const std::string& url, const std::string& name);
+private:
+    std::string path = "/home/flits/CLionProjects/DAB2/webpage/img/";
 };
 
 

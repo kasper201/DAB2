@@ -48,6 +48,14 @@ int main() {
     SaveToDB saveToDB;
     GetCountries countries;
 
+    std::string path = "/home/flits/CLionProjects/DAB2/webpage/img/";
+    std::string pathIn;
+
+    std::cout << "Enter Path(enter 'default' for programmed path): ";
+    std::cin >> pathIn;
+    if(pathIn != "default")
+        path = std::move(pathIn);
+
     std::cout << countries.countryConverter("Netherlands") << std::endl;
     std::vector<std::string>    givenNames, familyNames, nationalities,
                                 permanentNumbers, fullNames, driverIds,
@@ -67,7 +75,7 @@ int main() {
     }
 
     saveToDB.saveToFile(givenNames, familyNames, nationalities, permanentNumbers, fullNames, driverIds, teams, circuit, country, circuitLength,
-                        dateAll, time, position, points, driverAll, type, fastestLapTimeAll, fastestLapNrAll, locationLAT, circuitLAT);
+                        dateAll, time, position, points, driverAll, type, fastestLapTimeAll, fastestLapNrAll, locationLAT, circuitLAT, path);
 
     return 0;
 }
