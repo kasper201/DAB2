@@ -15,16 +15,20 @@ getImage::~getImage() {
 
 }
 
+void getImage::setPath(std::string pathIn) {
+    this->path = std::move(pathIn);
+}
+
 size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::ofstream* imageFile) {
     size_t totalSize = size * nmemb;
     imageFile->write((char*)contents, totalSize);
     return totalSize;
 }
 
-int getImage::getTheImage(std::string url, std::string nameIn) {
+int getImage::getTheImage(const std::string& url, const std::string& nameIn) {
     // Initialize cURL
     CURL* curl = curl_easy_init();
-    std::string name = (nameIn + ".png");
+    std::string name = (this->path + nameIn + ".png");
 
     if (curl) {
         // Open a file to write the image

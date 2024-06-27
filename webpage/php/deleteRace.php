@@ -19,7 +19,5 @@ if (!$mysqli->multi_query($sql)) {
 }
 
 // Redirect to main.html
-//header('Location: ../main.html');
-//exit;
-
-echo '<script>alert("Failed to connect to MySQL: ' . $mysqli->error . '");</script>';
+header('Location: ../main.html');
+exit;
