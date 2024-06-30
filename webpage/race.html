@@ -96,7 +96,7 @@
                 document.getElementById("circuitName").innerText = raceData['circuit naam'];
                 document.getElementById("circuitLength").innerText = raceData['circuit lengt(km)']; // jasper heeft n prachtige typ fout gemaakt
                 document.getElementById("circuitCountry").innerText = raceData['country'];
-                document.getElementById("circuit").src = "data:image/jpeg;base64," + raceData['circuit foto'];
+                document.getElementById("circuit").src = raceData['circuit foto'];
             } else {
                 alert("Empty response received, likely incorrect name");
                 console.log("Empty response received");

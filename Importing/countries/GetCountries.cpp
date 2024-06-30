@@ -78,9 +78,9 @@ void GetCountries::saveAllCountries(std::ofstream &file) {
                 code = countryCodes[j].adjectival;
             }
         }
-        file << "INSERT INTO land (landID, naam, adjectival, flag) VALUES (" << i << ", " << std::quoted(data[i].country) << ", " << std::quoted(data[i].adjectival) << ", '" << "/home/flits/Downloads/country-flags-main/png100px/" << code << ".png');" << std::endl;
+        file << "INSERT INTO land (landID, naam, adjectival, flag) VALUES (" << i << ", " << std::quoted(data[i].country) << ", " << std::quoted(data[i].adjectival) << ", '" << "country-flags-main/png100px/" << code << ".png');" << std::endl;
         std::cout << "country: " << data[i].country << " adjectival: " << data[i].adjectival << std::endl;
-        file << "UPDATE test.land tL SET tL.flag = '" << "/home/flits/CLionProjects/DAB2/webpage/country-flags-main/png100px/" << code << ".png' WHERE tL.naam = " << std::quoted(data[i].country) << ";" << std::endl;
+        file << "UPDATE test.land tL SET tL.flag = '" << "country-flags-main/png100px/" << code << ".png' WHERE tL.naam = " << std::quoted(data[i].country) << ";" << std::endl;
     }
 
 }

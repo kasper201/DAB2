@@ -121,7 +121,7 @@ int SaveToDB::saveToFile(std::vector<std::string> givenNames, std::vector<std::s
             std::cout << "Circuit: " << circuit[i] << " CircuitLAT: " << circuitLAT[i] << std::endl;
             fileSave << "INSERT IGNORE INTO circuit (ID, circuitNaam, landID, lengte, foto) VALUES (" << i << ", '"
                      << circuit[i] << "', " << getCountries.countryConverter(country[i]) << ", " << circuitLength[i]
-                     << ", '" << path << circuit[i] << ".png" << "');" << std::endl;
+                     << ", '" << "img/" << circuit[i] << ".png" << "');" << std::endl;
         }
     }
 
@@ -189,7 +189,7 @@ int SaveToDB::saveToFile(std::vector<std::string> givenNames, std::vector<std::s
 //    WHERE t.coureurID = 3;
 
     for(int i = 0; i < familyNamesTemp.size(); i++) {
-        fileSave << "UPDATE test.coureur t SET t.foto = '" << path << familyNamesTemp[i] << ".png' WHERE t.coureurID = " << permanentNumbers[i] << ";" << std::endl;
+        fileSave << "UPDATE test.coureur t SET t.foto = '" << "img/" << familyNamesTemp[i] << ".png' WHERE t.coureurID = " << permanentNumbers[i] << ";" << std::endl;
     }
 
     fileSave.close();

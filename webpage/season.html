@@ -74,7 +74,7 @@
                 document.getElementById("podiumPlaces").innerHTML = raceData['podium_places'];
                 document.getElementById("constructorPoints").innerHTML = raceData['team_points'];
                 document.getElementById("constructorWins").innerHTML = raceData['team_wins'];
-                document.getElementById("winnerPfp").src = "data:image/jpeg;base64," + raceData['coureur_foto'];
+                document.getElementById("winnerPfp").src = raceData['coureur_foto'];
             } else {
                 alert("Empty response received, likely incorrect name");
                 console.log("Empty response received");

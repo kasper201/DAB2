@@ -80,9 +80,9 @@
                 document.getElementById("firstPlaces").innerText = raceData['First places'];
                 document.getElementById("secondPlaces").innerText = raceData['second places'];
                 document.getElementById("thirdPlaces").innerText = raceData['third places'];
-                document.getElementById("portrait").src = 'data:image/jpeg;base64,' + raceData['selfie'];
-                document.getElementById("flag1").src = 'data:image/jpeg;base64,' + raceData['nationalflag']; // make these unique once it works
-                document.getElementById("flag2").src = 'data:image/jpeg;base64,' + raceData['nationalflag2'];
+                document.getElementById("portrait").src = raceData['selfie'];
+                document.getElementById("flag1").src = raceData['nationalflag']; // make these unique once it works
+                document.getElementById("flag2").src = raceData['nationalflag2'];
                 // TODO: Add flags
             } else {
                 alert("Empty response received, likely incorrect name");

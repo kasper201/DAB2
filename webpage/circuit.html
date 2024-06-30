@@ -59,7 +59,7 @@
                 document.getElementById("lapRecordHolder").innerText = raceData['record holder'];
                 document.getElementById("lapRecord").innerText = raceData['best lap'];
                 document.getElementById("latestSeason").innerText = raceData['last season'];
-                document.getElementById("circuit").src = "data:image/jpeg;base64," + raceData['circuit plategrond'];
+                document.getElementById("circuit").src = raceData['circuit plategrond'];
                 // update placeholder image with actual image
             } else {
                 alert("Empty response received, likely incorrect name");
