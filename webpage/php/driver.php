@@ -6,7 +6,7 @@ $mysqli = getMysqli();
 // Retrieve the driver name from the POST request
 $driver = $mysqli->real_escape_string($_SESSION['search']);
 
-$sql = "SELECT * FROM coureur_view WHERE naam = '$driver'";
+$sql = "SELECT * FROM coureur_view WHERE naam LIKE '%$driver%'";
 $result = $mysqli->query($sql);
 error_log("Number of rows: " . $result->num_rows); // Add this line
 

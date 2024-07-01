@@ -3,7 +3,7 @@ include "getMySqli.php";
 
 $mysqli = getMysqli();
 
-$query = "CALL getCircuitOverview()";
+$query = "SELECT * FROM season_overview ORDER BY season DESC;";
 
 error_log("Executing query: " . $query);
 
@@ -25,5 +25,7 @@ if ($result->num_rows > 0) {
         error_log("Row: " . print_r($row, true));
     }
 }
+
+echo json_encode($products);
 
 return $products;
