@@ -83,9 +83,11 @@ int driverinfo::driver(int year,
 
     // Print names and nationalities
     for (size_t i = 0; i < givenNames.size(); ++i) {
+        if(familyNames.empty() || givenNames.empty() || nationalities.empty() || permanentNumbers.empty() || driverIds.empty() || teams[driverIds[i]][0].empty())
+            return 1;
         fullNames.push_back(givenNames[i] + " " + familyNames[i]);
         driverImage(familyNames[i]);
-        std::cout << i << " - Nationality: " << nationalities[i] << " full name: " << fullNames[i] << " Permanent number: " << permanentNumbers[i] << " Team: " << teams[driverIds[i]][0] << std::endl;
+        //std::cout << i << " - Nationality: " << nationalities[i] << " full name: " << fullNames[i] << " Permanent number: " << permanentNumbers[i] << " Team: " << teams[driverIds[i]][0] << std::endl;
     }
 
     return 0;

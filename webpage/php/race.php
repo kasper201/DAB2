@@ -28,8 +28,12 @@ if ($result->num_rows > 0) {
             $row[$key] = "N/A"; // replace with default value
         }
     }
-    $_SESSION['raceID'] = $row['raceID'];
     // Return circuit information as JSON
     header('Content-Type: application/json');
     echo json_encode($row);
+} else {
+    error_log("No results found for season: " . $season);
+    http_response_code(404); // Not Found
+    echo json_encode(["error" => "No results found for season: " . $season]);
+    exit; // Ensure the script ends after sending the response
 }

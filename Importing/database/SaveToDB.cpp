@@ -91,7 +91,7 @@ int SaveToDB::saveToFile(std::vector<std::string> givenNames, std::vector<std::s
             break;
         familyNamesTemp.push_back(familyNames[i]);
         fileSave << "INSERT IGNORE INTO coureur (coureurID, naam, foto) VALUES (" << permanentNumbers[i] << ", '"
-                 << fullNames[i] << "', '" << path << familyNames[i] << ".png');" << std::endl;
+                 << fullNames[i] << "', '" << "img/" << familyNames[i] << ".png');" << std::endl;
     }
 
     std::cout << "Saving team info" << std::endl;

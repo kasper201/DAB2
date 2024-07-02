@@ -83,6 +83,8 @@
             if (this.responseText.trim() !== "") {
                 let raceData = JSON.parse(this.responseText);
 
+                console.log(raceData);
+
                 // Update HTML elements with race information
                 document.getElementById("winner").innerText = raceData['First place'];
                 document.getElementById("second").innerText = raceData['Second place'];
