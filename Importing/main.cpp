@@ -64,7 +64,7 @@ int main() {
                                 points, type, locationLAT, circuitLAT,
                                 fastestLapTimeAll, fastestLapNrAll = {""};
     std::map<std::string, std::vector<std::string>> teams;
-    int year = 2023;
+    int year = 2014; // starting year
     for(int i = 0; i + year <= 2024; i++){
         driverinfo.driver(year + i, givenNames, familyNames, nationalities, permanentNumbers, fullNames, driverIds, teams);
         circuitInfo.circuit(year + i, circuit, country, circuitLength, circuitLAT);

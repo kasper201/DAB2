@@ -45,6 +45,21 @@ body {
     cursor: pointer;
 }
 
+.driverOverview {
+    font-weight: bold;
+    position: relative;
+    top: 10px;
+    left: 150px;
+    z-index: 3;
+    background-color: #C00000;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+
 .searchBlockBackground {
     position: relative;
     top: 50%;
