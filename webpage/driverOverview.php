@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Season Overview</title>
     <link rel="icon" href="img/LogoColour.png">
-    <link rel="stylesheet" href="design/seasonOverview.css">
+    <link rel="stylesheet" href="design/driverOverview.css">
 </head>
 <body>
 <button class="BackButton" onclick="window.location.href='main.html'">Back</button>
