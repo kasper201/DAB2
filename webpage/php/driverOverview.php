@@ -6,11 +6,8 @@ $mysqli = getMysqli();
 
 $query = "SELECT * FROM coureur_view ORDER BY naam DESC;";
 
-
 $drivers = getArr($query, $mysqli);
 
-error_log("Drivers: " . print_r($drivers, true));
-
-header('Content-Type: application/json');
+header('Content-Type: application/json');  // Set the Content-Type header
 echo json_encode($drivers);
 return $drivers;
