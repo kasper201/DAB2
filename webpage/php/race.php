@@ -1,5 +1,6 @@
 <?php
 include 'getMySqli.php';
+include 'utf8ize.php';
 
 $mysqli = getMysqli();
 
@@ -22,6 +23,7 @@ if ($mysqli->error) {
 if ($result->num_rows > 0) {
     // Fetch the first row
     $row = $result->fetch_assoc();
+    $row = utf8ize($row);
 
     foreach ($row as $key => $value) {
         if (is_null($value)) {
