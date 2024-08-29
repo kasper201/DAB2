@@ -24,7 +24,18 @@ Before the installation starts it is assumed that XAMPP, a MYSQL IDE and C++ IDE
 
 ## Change website folder
 
-To change the website folder look for `DocumentRoot "/your/directory"` and change the directory there with the one you have the root of the webpage in. Do that in `<Directory ` just below it as well.
+To use the website one has to change the folder the apache server uses to host the website. This can be done in by doing the following:
+
+Start XAMPP Manager and go to Manage Servers. Then click on Apache Web Server and then Configure. Click on Open Conf File and look for `DocumentRoot "/your/directory"`. Here you can change the directory to the one you have the root of the webpage in. Also do that in `<Directory ` just below it. Then save it.
+
+## Starting 
+
+To start the website and database first open XAMPP Manager and go to Manage Servers. Then click on `MySQL Database` and click on `Start`. Do the same for `Apache Web Server`. 
+Congratulations! The website now runs on your localhost. To find the page go to localhost in your browser and open the login page. the login codes are
+username: User1
+password: password
+
+if this doesn't work continue to MYSQL Password forgotten.
 
 ## building the DataBase
 
