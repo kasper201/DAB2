@@ -20,7 +20,7 @@ To pull data from existing databases one can use the program of which the code i
 
 # Installation
 
-Before the installation starts it is assumed that XAMPP, a MYSQL IDE and C++ IDE are already installed.
+Before the installation starts it is assumed that XAMPP, a MYSQL IDE and the C++ IDE are already installed.
 
 ## Change website folder
 
